@@ -1,0 +1,29 @@
+
+html {
+    font-size: 10px;
+}
+
+body {
+    font-size: 180%;
+    margin: 0 auto;
+    max-width: 800px;
+    width: 100%;
+}
+
+h1 {
+    font-family: sans-serif;
+    font-size: 225%;
+}
+
+ol {
+    list-style-type: decimal;
+}
+
+li {
+    margin-left: 1.5em;
+    padding-left: 0.5em;
+}
+
+.header-image {
+    width: 100%;
+}
