@@ -12,12 +12,15 @@ setTimeout(function () {
 
 
 window.addEventListener("scroll", function (evt) {
-    if (evt.target.scrollingElement.nodeName.toLowerCase() !== "body") {
+    var targetName = evt.target.scrollingElement.nodeName.toLowerCase();
+    if (targetName !== "body" && targetName !== "html") {
         return;
     }
 
+    var target = document.getElementsByTagName(targetName)[0];
+    var st = target.scrollTop;
     var m = document.getElementsByClassName("menu-container")[0];
-    if (40 <= evt.target.body.scrollTop) {
+    if (40 <= st) {
         if (!m.classList.contains("hidden")) {
             m.classList.add("hidden");
         }
