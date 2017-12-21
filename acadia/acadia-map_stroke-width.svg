@@ -549,11 +549,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.2399419"
-     inkscape:cx="4065.3498"
-     inkscape:cy="3174.1972"
+     inkscape:zoom="0.4798838"
+     inkscape:cx="4006.1716"
+     inkscape:cy="673.59191"
      inkscape:document-units="px"
-     inkscape:current-layer="layer6"
+     inkscape:current-layer="layer16"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
@@ -562,10 +562,10 @@
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
      inkscape:snap-others="false"
-     inkscape:snap-grids="true"
-     inkscape:snap-to-guides="false"
-     inkscape:snap-global="true"
-     inkscape:object-paths="false"
+     inkscape:snap-grids="false"
+     inkscape:snap-to-guides="true"
+     inkscape:snap-global="false"
+     inkscape:object-paths="true"
      inkscape:measure-start="0,0"
      inkscape:measure-end="0,0"
      inkscape:snap-intersection-paths="false"
@@ -575,7 +575,7 @@
      inkscape:snap-midpoints="false"
      showguides="false"
      inkscape:guide-bbox="true"
-     inkscape:bbox-nodes="false"
+     inkscape:bbox-nodes="true"
      inkscape:snap-bbox-midpoints="false"
      inkscape:snap-bbox-edge-midpoints="true"
      inkscape:bbox-paths="true"
@@ -797,7 +797,7 @@
        id="guide1351"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="5120.2983,4314.9738"
+       position="5197.0914,4423.9876"
        orientation="1,0"
        id="guide1357"
        inkscape:locked="false" />
@@ -3000,7 +3000,7 @@
     </g>
     <g
        id="g9258"
-       transform="translate(295.90496,-118.7072)">
+       transform="translate(485.53419,-118.7072)">
       <rect
          y="3225.4978"
          x="452.99625"
@@ -3259,7 +3259,8 @@
            sodipodi:role="line">Eden Street stops</tspan></text>
     </g>
     <g
-       id="g9364">
+       id="g9364"
+       transform="translate(195.86569,-1.0771484e-4)">
       <rect
          y="2484.7512"
          x="1764.4971"
