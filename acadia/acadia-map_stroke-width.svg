@@ -551,11 +551,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.9597676"
-     inkscape:cx="632.41793"
-     inkscape:cy="436.56849"
+     inkscape:zoom="0.33932909"
+     inkscape:cx="3838.7967"
+     inkscape:cy="4739.1764"
      inkscape:document-units="px"
-     inkscape:current-layer="layer13"
+     inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
@@ -1704,11 +1704,14 @@
      inkscape:label="southwest harbor"
      transform="translate(1990,2745)">
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#f047d9;stroke-width:50px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#d133ac;stroke-width:50px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 1945,150 H 650.1203 c -75.53946,0 -107.85775,12.1472 -163.9468,68.2362 l -47.9504,47.9504 -98.05665,-98.0568 C 282.57992,110.54332 252.80791,100 177.1895,100 h -987.8728 c -39.99197,0 -75,38.2218 -75,75 v 1714.1877 c 0,60.2326 8.3504,83.3505 53.1997,128.1998 l 203.10186,203.1019 c 44.5678,44.5678 53.69844,64.9525 53.69844,128.6983 v 462.1075 c 0,39.0652 -36.42322,75.0001 -75,75.0001 h -440.0638 c -63.6076,0 -83.5118,-8.5119 -128.4687,-53.4688 l -386.4675,-386.4675"
        id="path4996"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccccccccccccc" />
+       sodipodi:nodetypes="ccccccccccccccccc">
+      <desc
+         id="desc2880">Southwest Harbor route</desc>
+    </path>
     <g
        id="g1421"
        transform="translate(-242.43737,-939.68826)">
@@ -1736,7 +1739,7 @@
            sodipodi:role="line">Campground</tspan></text>
     </g>
     <rect
-       style="display:inline;opacity:1;fill:#f047d9;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#d133ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-1-9-9-4-9"
        width="60"
        height="36.923077"
@@ -1744,7 +1747,7 @@
        y="364.7951"
        transform="rotate(90)" />
     <rect
-       style="display:inline;opacity:1;fill:#f047d9;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#d133ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-1-9-9-4-9-8"
        width="60"
        height="36.923077"
@@ -1763,7 +1766,7 @@
          y="543.83081"
          style="font-size:66.66666412px">Somesville</tspan></text>
     <rect
-       style="display:inline;opacity:1;fill:#f047d9;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#d133ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-1-9-9-4-9-8-5"
        width="60"
        height="36.923077"
@@ -1782,7 +1785,7 @@
          y="984.35352"
          style="font-size:66.66666412px">Echo Lake</tspan></text>
     <rect
-       style="display:inline;opacity:1;fill:#f047d9;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#d133ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-1-9-9-4-9-8-5-8"
        width="60"
        height="36.923077"
@@ -1816,7 +1819,7 @@
            sodipodi:role="line">Campground</tspan></text>
     </g>
     <rect
-       style="display:inline;opacity:1;fill:#f047d9;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#d133ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-1-9-9-4-9-8-5-8-3"
        width="60"
        height="36.923077"
@@ -1835,7 +1838,7 @@
          y="1866.5386"
          style="font-size:66.66666412px">Clark Point</tspan></text>
     <rect
-       style="display:inline;opacity:1;fill:#f047d9;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#d133ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-1-9-9-4-9-8-5-8-3-0"
        width="60"
        height="36.923077"
@@ -1854,7 +1857,7 @@
          y="2218.7124"
          style="font-size:66.66666412px">Southwest Harbor</tspan></text>
     <rect
-       style="display:inline;opacity:1;fill:#f047d9;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#d133ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-1-9-9-4-9-8-5-8-3-9"
        width="60"
        height="36.923077"
@@ -1862,7 +1865,7 @@
        y="-2422.3621"
        transform="scale(-1)" />
     <rect
-       style="display:inline;opacity:1;fill:#f047d9;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#d133ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-1-9-9-4-9-8-5-8-3-8"
        width="60"
        height="36.923077"
@@ -1870,7 +1873,7 @@
        y="-2770.3049"
        transform="scale(-1)" />
     <rect
-       style="display:inline;opacity:1;fill:#f047d9;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#d133ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-1-9-9-4-9-8-5-8-3-2"
        width="60"
        height="36.923077"
@@ -1878,7 +1881,7 @@
        y="-875.99786"
        transform="matrix(0,1,1,0,0,0)" />
     <rect
-       style="display:inline;opacity:1;fill:#f047d9;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#d133ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-1-9-9-4-9-8-5-8-3-2-5"
        width="60"
        height="36.923077"
@@ -1886,7 +1889,7 @@
        y="-1135.5038"
        transform="matrix(0.70710678,-0.70710678,-0.70710678,-0.70710678,0,0)" />
     <rect
-       style="display:inline;opacity:1;fill:#f047d9;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#d133ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-1-9-9-4-9-8-5-8-3-2-5-7"
        width="60"
        height="36.923077"
@@ -1979,7 +1982,7 @@
          y="2575.3242"
          style="font-size:66.66666412px">Tremont School</tspan></text>
     <rect
-       style="display:inline;opacity:1;fill:#f047d9;fill-opacity:1;stroke:none;stroke-width:25.6980648;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#d133ac;fill-opacity:1;stroke:none;stroke-width:25.6980648;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-1-9-9-2-9-6"
        width="120"
        height="36.923077"
@@ -2563,13 +2566,16 @@
      inkscape:label="sand beach"
      transform="translate(1990,2745)">
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#1ae6ac;stroke-width:50px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#276d4b;stroke-width:50px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 1894.3752,225.9649 v 143.3203 c 0,58.4647 -11.0907,86.0907 -53.3855,128.3855 l -130.208,155.8328 104.1981,104.1982 c 45.8389,45.8389 54.6966,69.784 54.6966,130.779 v 436.3347 c 0,66.4749 -5.7092,80.7092 -53.0908,128.0908 l -196.0834,196.0834 c -26.8291,26.8291 -78.7251,27.0727 -106.29,-0.4921 l -48.8129,-48.8129 c -47.4781,-47.4782 -52.6855,-62.6667 -52.6855,-127.6856 v -445.4276 c 0,-65.8794 6.4228,-81.4228 53.0761,-128.0761 l 274.4897,-274.4897"
        id="path4986"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccccccccccc" />
+       sodipodi:nodetypes="ccccccccccccccc">
+      <desc
+         id="desc1546">Sand Beach route</desc>
+    </path>
     <rect
-       style="opacity:1;fill:#1ae6ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#276d4b;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986"
        width="60"
        height="36.923077"
@@ -2603,7 +2609,7 @@
          id="desc1633">one-way arrow</desc>
     </path>
     <rect
-       style="opacity:1;fill:#1ae6ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#276d4b;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4"
        width="60"
        height="36.923077"
@@ -2690,7 +2696,7 @@
          id="desc1641">one-way arrow</desc>
     </path>
     <rect
-       style="opacity:1;fill:#1ae6ac;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#276d4b;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6986-4-4"
        width="60"
        height="36.923077"
@@ -2831,15 +2837,6 @@
        id="path5002-7-2"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc" />
-    <path
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#e9fee1;stroke-width:20;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 4634.659,321.696 -70.7107,70.7107 -35.3553,-35.3553 -35.3554,-35.3554"
-       id="path1265-7-29"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccc">
-      <desc
-         id="desc1605">one-way arrow</desc>
-    </path>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#e9fee1;stroke-width:20;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 4634.659,789.3805 -70.7107,70.7107 -35.3553,-35.3553 -35.3554,-35.3554"
@@ -3477,7 +3474,7 @@
          inkscape:connector-curvature="0"
          id="path4558-2-4-5"
          d="m 2280.2356,2935.3206 h -250"
-         style="display:inline;fill:none;fill-rule:evenodd;stroke:#1ae6ac;stroke-width:50px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="display:inline;fill:none;fill-rule:evenodd;stroke:#276d4b;stroke-width:50px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <text
          id="text1651-9-45-8-1-0-8-5-7-4-2-5"
          y="2963.9966"
@@ -3556,7 +3553,7 @@
          inkscape:connector-curvature="0"
          id="path4558-2-4-5-8-8-0-6"
          d="m 2280.2356,3451.2054 h -250"
-         style="display:inline;fill:none;fill-rule:evenodd;stroke:#f047d9;stroke-width:50px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="display:inline;fill:none;fill-rule:evenodd;stroke:#d133ac;stroke-width:50px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <text
          id="text1651-9-45-8-1-0-8-5-7-4-2-5-1-0-1-1-7"
          y="3610.8147"
