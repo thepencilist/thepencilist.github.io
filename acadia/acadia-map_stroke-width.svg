@@ -549,11 +549,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.2191633"
-     inkscape:cx="4615.503"
-     inkscape:cy="3142.486"
+     inkscape:zoom="0.4383266"
+     inkscape:cx="3036.8877"
+     inkscape:cy="3577.5615"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer9"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
@@ -1205,7 +1205,7 @@
        xml:space="preserve"
        id="flowRoot4591-7-2-7"
        style="font-style:normal;font-weight:normal;font-size:37.33333206px;line-height:100%;font-family:Sans;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="translate(76.530748,-1043.4412)"><flowRegion
+       transform="translate(-363.78019,-1134.6974)"><flowRegion
          id="flowRegion4593-1-7-9"
          style="font-size:37.33333206px;line-height:100%;text-align:end;text-anchor:end"><rect
            id="rect4595-5-2-3"
@@ -1326,7 +1326,15 @@
            y="1329.0094"
            style="line-height:100%;text-align:end;text-anchor:end" /></flowRegion><flowPara
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:37.33333206px;line-height:100%;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:end;text-anchor:end"
-         id="flowPara4629-5-4-1-11-7">College of the Atlantic</flowPara></flowRoot>  </g>
+         id="flowPara4629-5-4-1-11-7">College of the Atlantic</flowPara></flowRoot>    <rect
+       style="display:inline;opacity:1;fill:#539fb2;fill-opacity:1;stroke:none;stroke-width:25.6980648;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6986-4-1-9-9-2-9-6-1-8-9"
+       width="120"
+       height="36.923077"
+       x="-580.58606"
+       y="-933.29321"
+       transform="rotate(135)" />
+  </g>
   <g
      inkscape:groupmode="layer"
      id="layer5"
@@ -2403,7 +2411,7 @@
      inkscape:label="schoodic">
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#753bdc;stroke-width:50px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 1954.0635,-435.93654 292.3435,292.34355 C 2291.7885,-98.211463 2310.7862,-90 2374.0988,-90 h 124.8494 c 37.8554,0 75.0001,36.01992 75.0001,75 v 793.9218 c 0,60.813 8.3259,83.35236 53.1726,128.19905 l 18.492,18.49205 C 2693.6573,973.6573 2710.8301,980 2775,980 h 280.2981 c 40.8475,0 75,-35.94036 75,-75 V -204.01118"
+       d="m 2043.0383,-346.96174 203.3687,203.36875 C 2291.7885,-98.211463 2310.7862,-90 2374.0988,-90 h 124.8494 c 37.8554,0 75.0001,36.01992 75.0001,75 v 793.9218 c 0,60.813 8.3259,83.35236 53.1726,128.19905 l 18.492,18.49205 C 2693.6573,973.6573 2710.8301,980 2775,980 h 280.2981 c 40.8475,0 75,-35.94036 75,-75 V -204.01118"
        id="path5002-7"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccccccc"
@@ -2492,7 +2500,7 @@
        width="120"
        height="36.923077"
        x="-2315.6707"
-       y="-3340.5391"
+       y="-3466.3684"
        transform="rotate(135)" />
     <rect
        style="display:inline;opacity:1;fill:#753bdc;fill-opacity:1;stroke:none;stroke-width:18.17127609;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -2516,7 +2524,7 @@
        width="60"
        height="36.923077"
        x="-5120.2983"
-       y="-969.02618"
+       y="-881.02618"
        transform="scale(-1)" />
     <rect
        style="display:inline;opacity:1;fill:#753bdc;fill-opacity:1;stroke:none;stroke-width:25.6980648;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -2528,13 +2536,13 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:74.66666412px;line-height:125%;font-family:Arial;-inkscape-font-specification:'Arial Bold';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="3999.3164"
-       y="697.80157"
+       x="4082.2913"
+       y="792.77637"
        id="text1651-9-45-8-1-4-9-9-6-5-0-0"><tspan
          sodipodi:role="line"
          id="tspan1649-0-3-3-95-0-2-3-0-9-7-1"
-         x="3999.3164"
-         y="697.80157"
+         x="4082.2913"
+         y="792.77637"
          style="font-size:66.66666412px">Winter Harbor</tspan></text>
     <g
        id="g2642"
@@ -2601,7 +2609,7 @@
     </g>
     <g
        id="g2907"
-       transform="translate(164.79948,110.08945)">
+       transform="translate(164.79948,22.08945)">
       <text
          id="text1651-9-45-8-1-4-9-9-6-5-0-2-6-5-3"
          y="829.85724"
