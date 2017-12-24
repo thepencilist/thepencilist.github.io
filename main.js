@@ -2,9 +2,9 @@
 setTimeout(function () {
     var e = document.getElementsByClassName("replace");
     for (var i = 0; i < e.length; i++) {
-        var ih = "rich";
+        var ih = "alexmcneary";
         ih += "@";
-        ih += "limnous.";
+        ih += "gmail.";
         ih += "com";
         e[i].innerHTML = ih;
     }
