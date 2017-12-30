@@ -47,7 +47,7 @@ span.icon {
 }
 
 .description, .content, .footer {
-    margin: 0 auto 15px auto;
+    margin: 0 auto 0 auto;
     max-width: 800px;
     padding: 15px 10px;
 }
@@ -257,4 +257,8 @@ span.icon {
     .menu a.item {
         display: none;
     }
+}
+
+.drawing-container {
+    flex-direction: column;
 }
