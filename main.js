@@ -1,3 +1,4 @@
+"use strict";
 
 setTimeout(function () {
     var e = document.getElementsByClassName("replace");
