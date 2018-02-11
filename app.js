@@ -4,14 +4,17 @@
 
     var _images;
 
+    /**
+     * Build the paragraph content of an image's content div.
+     * @param {string[]} description 
+     * @param {string} date 
+     * @param {HTMLElement} parent 
+     */
     function buildContent(description, date, parent) {
-        var desc;
         var para;
         for (var i = 0; i < description.length; i++) {
-            desc = description[i];
-
             para = document.createElement("p");
-            para.innerHTML = desc;
+            para.innerHTML = description[i];
 
             parent.appendChild(para);
         }
@@ -22,7 +25,12 @@
         parent.appendChild(para);
     }
 
-    function buildImageCollection(parentElement) {
+    /**
+     * Create the image collection and add it to the DOM.
+     * @param {HTMLElement} parent 
+     */
+    function buildImageCollection(parent) {
+        /** @type {ImageItem} */
         var image;
         var img;
         var container;
@@ -48,13 +56,13 @@
             buildContent(image.description, image.date, content);
             container.appendChild(content);
 
-            parentElement.appendChild(container);
+            parent.appendChild(container);
         }
     }
 
     function start() {
-        var parentElement = document.getElementById("image-collection");
-        buildImageCollection(parentElement);
+        var parent = document.getElementById("image-collection");
+        buildImageCollection(parent);
     }
 
     // Get started.
@@ -62,6 +70,19 @@
         start();
     });
 
+    /**
+     * Information about an image to be displayed.
+     * @typedef ImageItem
+     * @property {string} date
+     * @property {string[]} description
+     * @property {string} src
+     * @property {string[]} tags
+     */
+
+    /**
+     * The image collection.
+     * @type {ImageItem[]}
+     */
     _images = [
         {
             date: "January 27, 2018",
