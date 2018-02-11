@@ -2,6 +2,19 @@
 
 (function () {
 
+    /**
+     * Information about an image to be displayed.
+     * @typedef ImageItem
+     * @property {string} date
+     * @property {string[]} description
+     * @property {string} src
+     * @property {string[]} tags
+     */
+
+    /**
+     * The image collection.
+     * @type {ImageItem[]}
+     */
     var _images;
 
     /**
@@ -70,19 +83,6 @@
         start();
     });
 
-    /**
-     * Information about an image to be displayed.
-     * @typedef ImageItem
-     * @property {string} date
-     * @property {string[]} description
-     * @property {string} src
-     * @property {string[]} tags
-     */
-
-    /**
-     * The image collection.
-     * @type {ImageItem[]}
-     */
     _images = [
         {
             date: "January 27, 2018",
