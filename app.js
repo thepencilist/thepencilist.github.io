@@ -43,24 +43,34 @@
      * @param {HTMLElement} parent 
      */
     function buildImageCollection(parent) {
-        /** @type {ImageItem} */
-        var image;
-        var img;
-        var container;
-        var content;
-        var description;
-        for (var i = 0; i < _images.length; i++) {
-            image = _images[i];
+        /** @type {ImageItem[]} */
+        var imageCollection = _images;
 
-            img = document.createElement("img");
-            img.src = image.src;
-            img.style.width = "100%";
+        // This is where the imageCollection could be created with paging before
+        // it's passed to createImageCollectionElements.
+
+        createPageImageCollectionElements(parent, imageCollection);
+    }
+
+    /**
+     * Create the layout for images on the page.
+     * @param {HTMLElement} parent
+     * @param {ImageItem[]} images The images to display on this page.
+     */
+    function createPageImageCollectionElements(parent, images) {
+        // Create the container elements.
+        for (var i = 0; i < images.length; i++) {
+            var image = images[i];
+            var container;
+            var content;
+            var description;
 
             description = document.createElement("div");
             description.className = "description";
-            description.appendChild(img);
+            description.id = image.src;
 
             container = document.createElement("div");
+            container.style.display = "none"; // TODO: replace with some sort of class?
             container.className = "description drawing-container";
             container.appendChild(description);
 
@@ -71,6 +81,55 @@
 
             parent.appendChild(container);
         }
+
+        // Load the images.
+        for (var j = 0; j < images.length; j++) {
+            // Call another function to create the proper scope for working with
+            // a single image object.
+            createImageElement(images[j], function (image, img) {
+                // So for now we're just adding the images as they're loaded. I
+                // expect this will change once I start building the "brick
+                // wall" display and some sort of queueing will happen until a
+                // complete "row" has accumulated.
+                createImageElementCallback(image, img);
+            });
+        }
+    }
+
+    /**
+     * Add the image to the container.
+     * @param {ImageItem} image 
+     * @param {HTMLImageElement} img 
+     */
+    function createImageElementCallback(image, img) {
+        // console.log(image.src.split("/").pop() + " width: " + img.naturalWidth + ", height: " + img.naturalHeight);
+        var container = document.getElementById(image.src);
+        container.appendChild(img);
+        container.parentElement.style.display = "initial"; // TODO: replace with some sort of class?
+    }
+
+    /**
+     * Create the layout for a single image on the page.
+     * @param {ImageItem} image
+     * @param {(image: ImageItem, img: HTMLImageElement) => void} callback
+     */
+    function createImageElement(image, callback) {
+        /** @type {HTMLImageElement} */
+        var img;
+        /** @type {(evt: Event) => void} */
+        var loadHandler;
+
+        img = document.createElement("img");
+
+        loadHandler = function () {
+            // FYI: 'this' refers to the HTMLImageElement.
+            this.removeEventListener("load", loadHandler);
+            callback(image, this);
+        };
+
+        img.addEventListener("load", loadHandler);
+        img.style.width = "100%";
+        img.src = image.src;
     }
 
     function start() {
@@ -149,4 +208,4 @@
         }
     ];
 
-})()
+})();
