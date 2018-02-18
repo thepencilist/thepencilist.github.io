@@ -148,8 +148,19 @@
                 "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
             ],
             src: "drawings/bella/bella.jpg",
-            tags: ["cat", "drawing"]
+            tags: ["cat", "color", "drawing"]
         },
+
+        {
+            date: "February 2, 2018",
+            description: [
+                "Say hello to Kitty! This piece was commissioned by my friend John Cronin and was finished today, thanks John! The picture was so good I didn’t need to guess about any detail. A strange and unusual bit of trivia is that this whole thing only used 1/4 of a pencil!",
+                "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
+            ],
+            src: "drawings/kitty/kitty.jpg",
+            tags: ["commission", "dog", "drawing"]
+        },
+
         {
             date: "January 27, 2018",
             description: [
@@ -157,7 +168,7 @@
                 "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
             ],
             src: "drawings/moose/moose.jpg",
-            tags: ["commission", "dog", "drawing"]
+            tags: ["color", "commission", "dog", "drawing"]
         },
         {
             date: "January 22, 2018",
@@ -175,7 +186,7 @@
                 "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
             ],
             src: "drawings/beach-seaweed/beach-seaweed.jpg",
-            tags: ["drawing", "maine", "nature"]
+            tags: ["color", "drawing", "maine", "nature"]
         },
         {
             date: "December 12, 2017",
@@ -193,16 +204,16 @@
                 "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
             ],
             src: "drawings/beach-red-leaf/beach-red-leaf.jpg",
-            tags: ["drawing", "maine", "nature"]
+            tags: ["color", "drawing", "maine", "nature"]
         },
         {
             date: "December 20, 2017",
             description: [
                 "I have two numb fingertips but it’s finally finished. It’s Junior, our sleepiest kitty.",
-                "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
+                "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
             ],
             src: "drawings/junior-couch/junior-couch.jpg",
-            tags: ["cat", "drawing"]
+            tags: ["cat", "color", "drawing"]
         },
         {
             date: "December 9, 2017",
