@@ -24,18 +24,16 @@
      * @param {HTMLElement} parent 
      */
     function buildContent(description, date, parent) {
-        var para;
+        var para = document.createElement("p");
+        para.innerText = date;
+        parent.appendChild(para);
+
         for (var i = 0; i < description.length; i++) {
             para = document.createElement("p");
             para.innerHTML = description[i];
 
             parent.appendChild(para);
         }
-
-        para = document.createElement("p");
-        para.innerText = date;
-
-        parent.appendChild(para);
     }
 
     /**
@@ -143,6 +141,15 @@
     });
 
     _images = [
+        {
+            date: "February 9, 2018",
+            description: [
+                "All done with “Bella”. Although a low paying commission it’s bound to make my daughter happy. She’s great around the vacuum cleaner because she can’t hear it and has never broken the skin with a bite, our little toothless Bella.",
+                "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
+            ],
+            src: "drawings/bella/bella.jpg",
+            tags: ["cat", "drawing"]
+        },
         {
             date: "January 27, 2018",
             description: [
