@@ -139,6 +139,7 @@ span.icon {
 
 .content {
     align-items: center;
+    display: none;
 }
 
 .content h1, .content h2 {
@@ -260,5 +261,15 @@ span.icon {
 }
 
 .drawing-container {
-    flex-direction: column;
+    display: inline-block;
+}
+
+.image-collection-wrapper {
+    width: 100%;
+}
+
+#image-collection {
+    margin: 0 auto 0 auto;
+    min-width: 800px;
+    width: 800px;
 }
