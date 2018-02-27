@@ -31,6 +31,10 @@ span.icon {
     font-size: 30px;
 }
 
+.content, .image-cell-info {
+    font-size: 10px; /* Restore the font size because it gets set to 0 by some containers. */
+}
+
 .description-container {
     background-color: rgb(53, 50, 48);
     border-radius: 0 0 3px 3px;
@@ -142,7 +146,7 @@ span.icon {
     display: none;
 }
 
-.content h1, .content h2 {
+.content h1, .content h2 , .content p, .image-cell-info-wrapper {
     font-family: "Karla", sans-serif;
     letter-spacing: -1px;
     line-height: 1.4;
@@ -158,7 +162,6 @@ span.icon {
 }
 
 .content p {
-    font-family: "Karla", sans-serif;
     font-size: 1.8em;
     letter-spacing: -0.5px;
     line-height: 1.4;
@@ -262,6 +265,8 @@ span.icon {
 
 .drawing-container {
     display: inline-block;
+    font-size: 0; /* Remove inline block trailing space. */
+    position: relative;
 }
 
 .image-collection-wrapper {
@@ -272,4 +277,49 @@ span.icon {
     margin: 0 auto 0 auto;
     min-width: 800px;
     width: 800px;
+}
+
+.image-cell {
+    width: 100%;
+}
+
+.image-cell:hover {
+    cursor: pointer;
+}
+
+.image-cell-info-overlay {
+    background-color: #FFFFFF00;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.image-cell-info-overlay:hover {
+    cursor: pointer;
+}
+
+.image-cell-info-overlay:hover > .image-cell-info-wrapper {
+    opacity: 1;
+}
+
+.image-cell-info-wrapper {
+    background-color: #777777CC;
+    bottom: 0;
+    display: block;
+    left: 0;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+}
+
+.image-cell-info {
+    color: white;
+    position: relative;
 }

@@ -86,8 +86,11 @@
         img.style.width = Math.round(image.imgData.width) + "px";
 
         var container = document.getElementById(image.src);
-        container.appendChild(img);
-        container.parentElement.style.display = "inline-block"; // TODO: replace with some sort of class?
+
+        // Cell info covers the entire image, any click events must be passed
+        // from it to the img element.
+        container.firstElementChild.addEventListener("click", function () { img.click(); });
+        container.firstElementChild.insertAdjacentElement("beforebegin", img);
     }
 
     /**
@@ -146,6 +149,29 @@
     }
 
     /**
+     * Create the cell info elements.
+     * @param {ImageItem} image The image with information to display.
+     * @returns HTMLElement
+     */
+    function createCellInfo(image) {
+        var title;
+        var cellInfoWrapper;
+        var overlay = document.createElement("div");
+        overlay.className = "image-cell-info-overlay";
+
+        cellInfoWrapper = document.createElement("div");
+        cellInfoWrapper.className = "image-cell-info-wrapper";
+        overlay.appendChild(cellInfoWrapper);
+
+        title = document.createElement("h1");
+        title.className = "image-cell-info";
+        title.innerText = image.src.split("/").pop();
+        cellInfoWrapper.appendChild(title);
+
+        return overlay;
+    }
+
+    /**
      * Create the layout for images on the page.
      * @param {HTMLElement} parent
      * @param {ImageItem[]} images The images to display on this page.
@@ -156,15 +182,17 @@
             var image = images[i];
             var container;
             var content;
-            var description;
+            var imageCell;
 
-            description = document.createElement("div");
-            description.id = image.src;
+            imageCell = document.createElement("div");
+            imageCell.className = "image-cell";
+            imageCell.id = image.src;
+            imageCell.style.display = "contents"; // TODO: replace with some sort of class?
+            imageCell.appendChild(createCellInfo(image));
 
             container = document.createElement("div");
-            container.style.display = "none"; // TODO: replace with some sort of class?
             container.className = "drawing-container";
-            container.appendChild(description);
+            container.appendChild(imageCell);
 
             content = document.createElement("div");
             content.className = "content";
@@ -228,7 +256,7 @@
         };
 
         img.addEventListener("load", loadHandler);
-        img.style.width = "100%";
+        img.addEventListener("click", function () { console.log("clicked"); });
         img.src = image.src;
     }
 
