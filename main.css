@@ -146,7 +146,7 @@ span.icon {
     display: none;
 }
 
-.content h1, .content h2 , .content p, .image-cell-info-wrapper {
+.content h1, .content h2 , .content p, .image-cell-info-container {
     font-family: "Karla", sans-serif;
     letter-spacing: -1px;
     line-height: 1.4;
@@ -263,7 +263,7 @@ span.icon {
     }
 }
 
-.drawing-container {
+.image-cell-container {
     display: inline-block;
     font-size: 0; /* Remove inline block trailing space. */
     position: relative;
@@ -302,11 +302,11 @@ span.icon {
     cursor: pointer;
 }
 
-.image-cell-info-overlay:hover > .image-cell-info-wrapper {
+.image-cell-info-overlay:hover > .image-cell-info-container {
     opacity: 1;
 }
 
-.image-cell-info-wrapper {
+.image-cell-info-container {
     background-color: #777777CC;
     bottom: 0;
     display: block;

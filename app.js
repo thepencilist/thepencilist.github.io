@@ -22,6 +22,21 @@
      * @property {number} width
      */
 
+    /**
+     * Information used to create an HTML element.
+     * @typedef ElementProperties
+     * @property {string} [id]
+     * @property {string} [className]
+     * @property {string} [innerText]
+     * @property {string} [src]
+     */
+
+    /**
+     * Information used to create an HTML element.
+     * @typedef StyleProperties
+     * @property {string} [display]
+     */
+
     // var _arNineSixteen = 9 / 16; // 0.5625 P
     var _arSixteenNine = 16 / 9; // 1.7778 L
     var _arThreeTwo = 3 / 2; // 1.5 L
@@ -94,25 +109,6 @@
     }
 
     /**
-     * Build the paragraph content of an image's content div.
-     * @param {string[]} description 
-     * @param {string} date 
-     * @param {HTMLElement} parent 
-     */
-    function buildContent(description, date, parent) {
-        var para = document.createElement("p");
-        para.innerText = date;
-        parent.appendChild(para);
-
-        for (var i = 0; i < description.length; i++) {
-            para = document.createElement("p");
-            para.innerHTML = description[i];
-
-            parent.appendChild(para);
-        }
-    }
-
-    /**
      * Create the image collection and add it to the DOM.
      * @param {HTMLElement} parent 
      */
@@ -149,92 +145,99 @@
     }
 
     /**
-     * Create the cell info elements.
-     * @param {ImageItem} image The image with information to display.
-     * @returns HTMLElement
+     * Create an HTML element.
+     * @param {string} tagName
+     * @param {ElementProperties} [props=null]
+     * @param {HTMLElement} [appendToParent=null] The new element will be appended as a child to this element.
+     * @param {StyleProperties} [style=null]
+     * @returns {HTMLElement}
      */
-    function createCellInfo(image) {
-        var title;
-        var cellInfoWrapper;
-        var overlay = document.createElement("div");
-        overlay.className = "image-cell-info-overlay";
+    function createElement(tagName, props, appendToParent, style) {
+        var i;
+        var keys;
+        var e = document.createElement(tagName);
 
-        cellInfoWrapper = document.createElement("div");
-        cellInfoWrapper.className = "image-cell-info-wrapper";
-        overlay.appendChild(cellInfoWrapper);
+        if (props) {
+            keys = Object.keys(props);
+            for (i = 0; i < keys.length; i++) {
+                e[keys[i]] = props[keys[i]];
+            }
+        }
 
-        title = document.createElement("h1");
-        title.className = "image-cell-info";
-        title.innerText = image.src.split("/").pop();
-        cellInfoWrapper.appendChild(title);
+        if (style) {
+            keys = Object.keys(style);
+            for (i = 0; i < keys.length; i++) {
+                e.style[keys[i]] = style[keys[i]];
+            }
+        }
 
-        return overlay;
+        if (appendToParent) {
+            appendToParent.appendChild(e);
+        }
+
+        return e;
     }
 
     /**
-     * Create the layout for images on the page.
-     * @param {HTMLElement} parent
-     * @param {ImageItem[]} images The images to display on this page.
+     * Create the image cell elements.
+     * @param {ImageItem} image 
+     * @param {number} id 
+     * @param {HTMLElement} [parent]
+     * @returns {HTMLDivElement} 
      */
-    function createPageImageCollectionElements(parent, images) {
-        // Create the container elements.
-        for (var i = 0; i < images.length; i++) {
-            var image = images[i];
-            var container;
-            var content;
-            var imageCell;
+    function createImageCell(image, id, parent) {
+        var container = document.getElementById("cell-" + id);
+        if (container == null) {
+            container = createElement("div", { className: "image-cell-container", id: "cell-" + id }, parent);
+            var imageCell = createElement("div", { className: "image-cell", id: image.src }, container);
+            var overlay = createElement("div", { className: "image-cell-info-overlay" }, imageCell);
+            var cellInfoContainer = createElement("div", { className: "image-cell-info-container" }, overlay);
+            createElement("h1", { className: "image-cell-info" }, cellInfoContainer);
 
-            imageCell = document.createElement("div");
-            imageCell.className = "image-cell";
-            imageCell.id = image.src;
-            imageCell.style.display = "contents"; // TODO: replace with some sort of class?
-            imageCell.appendChild(createCellInfo(image));
-
-            container = document.createElement("div");
-            container.className = "drawing-container";
-            container.appendChild(imageCell);
-
-            content = document.createElement("div");
-            content.className = "content";
-            buildContent(image.description, image.date, content);
-            container.appendChild(content);
-
-            parent.appendChild(container);
+            var content = createElement("div", { className: "content" }, container);
+            createElement("p", { className: "content-date" }, content);
+            for (var i = 0; i < image.description.length; i++) {
+                createElement("p", { className: "content-description" }, content);
+            }
         }
 
-        // The loadImages length must be set before the createImageElement
-        // callback is invoked. loadedImages is a sparse array.
-        var loadedImages = [];
-        loadedImages.length = images.length;
+        return container;
+    }
 
-        var processIndex = 0;
+    /**
+     * Update the information displayed in an image cell.
+     * @param {ImageItem} image 
+     * @param {HTMLDivElement} container
+     */
+    function updateImageCellContents(image, container) {
+        setInnerText(container, "image-cell-info", image.src.split("/").pop());
 
-        // Load the images.
-        for (var j = 0; j < images.length; j++) {
-            images[j].imgData = images[j].imgData || {};
-            images[j].imgData.pageIndex = j;
-
-            // Call another function to create the proper scope for working with
-            // a single image object.
-            createImageElement(images[j], function (image, img) {
-                loadedImages[image.imgData.pageIndex] = { image: image, img: img };
-                processIndex = processRow(loadedImages, processIndex);
-            });
+        var children = container.getElementsByClassName("content");
+        if (children && 0 < children.length) {
+            var content = children[0];
+            setInnerText(content, "content-date", image.date);
+            setInnerText(content, "content-description", image.description);
         }
     }
 
     /**
      * Create the layout for a single image on the page.
      * @param {ImageItem} image
+     * @param {number} id
      * @param {(image: ImageItem, img: HTMLImageElement) => void} callback
      */
-    function createImageElement(image, callback) {
+    function createImageElement(image, id, callback) {
         /** @type {HTMLImageElement} */
         var img;
         /** @type {(evt: Event) => void} */
         var loadHandler;
 
-        img = document.createElement("img");
+        var strId = "img-" + id;
+        img = document.getElementById(strId);
+        if (!img) {
+            img = createElement("img", { id: strId });
+            img.addEventListener("click", function () { console.log("clicked"); });
+        }
 
         loadHandler = function () {
             // FYI: 'this' refers to the HTMLImageElement.
@@ -256,12 +259,46 @@
         };
 
         img.addEventListener("load", loadHandler);
-        img.addEventListener("click", function () { console.log("clicked"); });
         img.src = image.src;
     }
 
     /**
-     * Handle determining when a row can be created.
+     * Create the layout for images on the page.
+     * @param {HTMLElement} parent
+     * @param {ImageItem[]} images The images to display on this page.
+     */
+    function createPageImageCollectionElements(parent, images) {
+        // Create the image cells.
+        var image;
+        var imageCell;
+        for (var i = 0; i < images.length; i++) {
+            image = images[i];
+            imageCell = createImageCell(image, i, parent);
+            updateImageCellContents(image, imageCell);
+        }
+
+        // The loadImages length must be set before the createImageElement
+        // callback is invoked. loadedImages is a sparse array.
+        var loadedImages = [];
+        loadedImages.length = images.length;
+
+        // Load the images.
+        var processIndex = 0;
+        for (var j = 0; j < images.length; j++) {
+            images[j].imgData = images[j].imgData || {};
+            images[j].imgData.pageIndex = j;
+
+            // Call another function to create the proper scope for working with
+            // a single image object.
+            createImageElement(images[j], j, function (image, img) {
+                loadedImages[image.imgData.pageIndex] = { image: image, img: img };
+                processIndex = processRow(loadedImages, processIndex);
+            });
+        }
+    }
+
+    /**
+     * Determines when a row can be created.
      * @param {{image: ImageData, img: HTMLImageElement}[]} images 
      * @param {number} startIndex Start adding images to rows using the item at this index.
      * @returns {number} Start processing rows next time from this index. 
@@ -272,7 +309,7 @@
         var row = [];
         for (var i = startIndex; i <= images.length; i++) {
             // All the images in the array have been dealt with. If there is a
-            // partial row remaining go ahead and add ti to the DOM then return.
+            // partial row remaining go ahead and add it to the DOM then return.
             if (images.length <= i) {
                 if (0 < row.length) {
                     addImageRowToDom(row);
@@ -300,15 +337,36 @@
         return nextIndex;
     }
 
-    function start() {
-        var parent = document.getElementById("image-collection");
-        buildImageCollection(parent);
+    /**
+     * Set the inner text of one or more elements.
+     * @param {HTMLElement} parent 
+     * @param {string} className 
+     * @param {string | string[]} text If a string the first element with the
+     * className will be set. If an array all the elements matching the
+     * className will be set.
+     */
+    function setInnerText(parent, className, text) {
+        var children = parent.getElementsByClassName(className);
+        if (!children || children.length < 1) {
+            return;
+        }
+
+        if (!Array.isArray(text)) {
+            children[0].innerText = text;
+        } else {
+            for (var i = 0; i < children.length && i < text.length; i++) {
+                children[i].innerText = text[i];
+            }
+        }
     }
+
 
     // Get started.
     window.addEventListener("load", function () {
-        start();
+        var parent = document.getElementById("image-collection");
+        buildImageCollection(parent);
     });
+
 
     _images = [
         {
