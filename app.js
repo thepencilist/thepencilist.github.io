@@ -41,9 +41,7 @@
     var _arSixteenNine = 16 / 9; // 1.7778 L
     var _arThreeTwo = 3 / 2; // 1.5 L
     // var _arTwoThree = 2 / 3; // 0.6667 P
-    var _imageSeparationWidth = 0;
-    var _maxCellsPerRow = 6;
-    var _rowMaxWidth = 800;
+    var _currentPageRowCount = 0;
 
     /**
      * The image collection.
@@ -51,11 +49,23 @@
      */
     var _images;
 
+    var _imageSeparationWidth = 0;
+    var _maxCellsPerRow = 6;
+    var _maxRowsPerPage = 1;
+    var _nextPageStartIndex = 0;
+    var _rowMaxWidth = 800;
+
+
     /**
      * Add a row of images to the DOM.
-     * @param {{image: ImageData, img: HTMLImageElement}[]} row 
+     * @param {{image: ImageData, img: HTMLImageElement}[]} row
+     * @param {number} startPageImageIndex The page-relative index of the first image in the row.
      */
-    function addImageRowToDom(row) {
+    function addImageRowToDom(row, startPageImageIndex) {
+        if (_maxRowsPerPage <= _currentPageRowCount) {
+            return;
+        }
+
         // First scale all of the image heights to the height of the first image.
         var sizes = [{ height: row[0].image.imgData.height, width: row[0].image.imgData.width }];
 
@@ -83,41 +93,45 @@
             image.imgData.width = (image.imgData.width * newHeight) / image.imgData.height;
             image.imgData.height = newHeight;
 
-            addImageToDom(image, row[j].img);
+            imageAddToCell(image, row[j].img, startPageImageIndex);
+            startPageImageIndex++;
         }
-    }
 
-    /**
-     * Add the image to the container.
-     * @param {ImageItem} image 
-     * @param {HTMLImageElement} img 
-     */
-    function addImageToDom(image, img) {
-        // console.log(image.src.split("/").pop() + " width: " + img.naturalWidth + ", height: " + img.naturalHeight);
-        // console.log(image.src.split("/").pop() + " ar: " + image.imgData.aspectRatio + ", cells: " + image.imgData.numberOfCells);
-        // console.log(image.src.split("/").pop() + " width: " + image.imgData.width + ", height: " + image.imgData.height);
-
-        img.style.height = Math.round(image.imgData.height) + "px";
-        img.style.width = Math.round(image.imgData.width) + "px";
-
-        var container = document.getElementById(image.src);
-
-        // Cell info covers the entire image, any click events must be passed
-        // from it to the img element.
-        container.firstElementChild.addEventListener("click", function () { img.click(); });
-        container.firstElementChild.insertAdjacentElement("beforebegin", img);
+        _currentPageRowCount++;
+        _nextPageStartIndex += row.length;
     }
 
     /**
      * Create the image collection and add it to the DOM.
      * @param {HTMLElement} parent 
+     * @param {number} [startIndex=0] 
+     * @param {"next" | "previous"} [direction="next"] 
      */
-    function buildImageCollection(parent) {
+    function buildImageCollection(parent, startIndex, direction) {
         /** @type {ImageItem[]} */
-        var imageCollection = _images;
+        var imageCollection = [];
+
+        var pageImageIndex = startIndex || 0;
+        var pageDirection = direction || "next";
 
         // This is where the imageCollection could be created with paging before
         // it's passed to createImageCollectionElements.
+        if (pageDirection === "next") {
+            if (_images.length <= _nextPageStartIndex) {
+                return;
+            }
+
+            for (var i = 0; pageImageIndex < _images.length && i < _maxCellsPerRow * _maxRowsPerPage; i++) {
+                imageCollection.push(_images[pageImageIndex]);
+                pageImageIndex++;
+            }
+        } else {
+            throw Error("not implemented.");
+            // for (var i = (_maxCellsPerRow * _maxRowsPerPage) - 1; pageImageIndex < _images.length && i < _maxCellsPerRow * _maxRowsPerPage; i++) {
+            //     imageCollection.push(_images[pageImageIndex]);
+            //     pageImageIndex++;
+            // }
+        }
 
         createPageImageCollectionElements(parent, imageCollection);
     }
@@ -142,6 +156,27 @@
         }
 
         return cells;
+    }
+
+    function clearPageImageCells() {
+        var imageCells = document.getElementsByClassName("image-cell");
+        for (var i = 0; i < imageCells.length; i++) {
+            imageRemoveFromCell(i, true);
+        }
+    }
+
+    function connectButtons() {
+        var e = document.getElementById("page-prev");
+        e.addEventListener("click", function () {
+            console.log("previous");
+        });
+
+        e = document.getElementById("page-next");
+        e.addEventListener("click", function () {
+            clearPageImageCells();
+            _currentPageRowCount = 0;
+            buildImageCollection(document.getElementById("image-collection"), _nextPageStartIndex);
+        });
     }
 
     /**
@@ -189,7 +224,10 @@
         var container = document.getElementById("cell-" + id);
         if (container == null) {
             container = createElement("div", { className: "image-cell-container", id: "cell-" + id }, parent);
-            var imageCell = createElement("div", { className: "image-cell", id: image.src }, container);
+            var imageCell = createElement("div", { className: "image-cell" }, container);
+
+            // Don't create the img element here. That will be added later as needed.
+
             var overlay = createElement("div", { className: "image-cell-info-overlay" }, imageCell);
             var cellInfoContainer = createElement("div", { className: "image-cell-info-container" }, overlay);
             createElement("h1", { className: "image-cell-info" }, cellInfoContainer);
@@ -205,22 +243,6 @@
     }
 
     /**
-     * Update the information displayed in an image cell.
-     * @param {ImageItem} image 
-     * @param {HTMLDivElement} container
-     */
-    function updateImageCellContents(image, container) {
-        setInnerText(container, "image-cell-info", image.src.split("/").pop());
-
-        var children = container.getElementsByClassName("content");
-        if (children && 0 < children.length) {
-            var content = children[0];
-            setInnerText(content, "content-date", image.date);
-            setInnerText(content, "content-description", image.description);
-        }
-    }
-
-    /**
      * Create the layout for a single image on the page.
      * @param {ImageItem} image
      * @param {number} id
@@ -232,6 +254,9 @@
         /** @type {(evt: Event) => void} */
         var loadHandler;
 
+        // Don't use getImageCellElements here because the img element may exist
+        // but not be connected to a parent element in the DOM (for example when
+        // loading).
         var strId = "img-" + id;
         img = document.getElementById(strId);
         if (!img) {
@@ -298,6 +323,70 @@
     }
 
     /**
+     * 
+     * @param {any} id The cell id.
+     * @returns {{cell: HTMLDivElement, container: HTMLDivElement, img: HTMLImageElement, overlay: HTMLDivElement}} 
+     */
+    function getImageCellElements(id) {
+        var container = document.getElementById("cell-" + id);
+        var cell = container.getElementsByClassName("image-cell")[0];
+        var img = cell.getElementsByTagName("img")[0];
+        var overlay = cell.getElementsByClassName("image-cell-info-overlay")[0];
+        return {
+            cell: cell,
+            container: container,
+            img: img,
+            overlay: overlay
+        };
+    }
+
+    /**
+     * Add the image to the container.
+     * @param {ImageItem} image 
+     * @param {HTMLImageElement} img 
+     * @param {number} id 
+     */
+    function imageAddToCell(image, img, id) {
+        img.style.height = Math.round(image.imgData.height) + "px";
+        img.style.width = Math.round(image.imgData.width) + "px";
+
+        var ic = getImageCellElements(id);
+
+        if (!ic.img) {
+            if (!ic.overlay) {
+                ic.cell.appendChild(img);
+            } else {
+                ic.overlay.insertAdjacentElement("beforebegin", img);
+            }
+
+            // Cell info covers the entire image, any click events must be
+            // passed from it to the img element.
+            ic.overlay.addEventListener("click", function () { img.click(); });
+        }
+    }
+
+    /**
+     * Remove the img element from the image cell.
+     * @param {number} id 
+     * @param {boolean} [removeSrc=false] 
+     * @returns 
+     */
+    function imageRemoveFromCell(id, removeSrc) {
+        var ic = getImageCellElements(id);
+        if (!ic.img) {
+            return;
+        }
+
+        var remove = removeSrc ? true : false;
+
+        if (remove) {
+            ic.img.src = "";
+        }
+
+        ic.cell.removeChild(ic.img);
+    }
+
+    /**
      * Determines when a row can be created.
      * @param {{image: ImageData, img: HTMLImageElement}[]} images 
      * @param {number} startIndex Start adding images to rows using the item at this index.
@@ -312,7 +401,7 @@
             // partial row remaining go ahead and add it to the DOM then return.
             if (images.length <= i) {
                 if (0 < row.length) {
-                    addImageRowToDom(row);
+                    addImageRowToDom(row, nextIndex);
                     return;
                 }
             }
@@ -324,7 +413,7 @@
             }
 
             if (_maxCellsPerRow < rowCells + images[i].image.imgData.numberOfCells) {
-                addImageRowToDom(row);
+                addImageRowToDom(row, nextIndex);
                 nextIndex += row.length;
                 row = [];
                 rowCells = 0;
@@ -360,9 +449,25 @@
         }
     }
 
+    /**
+     * Update the information displayed in an image cell.
+     * @param {ImageItem} image 
+     * @param {HTMLDivElement} container
+     */
+    function updateImageCellContents(image, container) {
+        setInnerText(container, "image-cell-info", image.src.split("/").pop());
+
+        var children = container.getElementsByClassName("content");
+        if (children && 0 < children.length) {
+            var content = children[0];
+            setInnerText(content, "content-date", image.date);
+            setInnerText(content, "content-description", image.description);
+        }
+    }
 
     // Get started.
     window.addEventListener("load", function () {
+        connectButtons();
         var parent = document.getElementById("image-collection");
         buildImageCollection(parent);
     });
