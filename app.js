@@ -37,23 +37,27 @@
      * @property {string} [display]
      */
 
-    // var _arNineSixteen = 9 / 16; // 0.5625 P
-    var _arSixteenNine = 16 / 9; // 1.7778 L
-    var _arThreeTwo = 3 / 2; // 1.5 L
-    // var _arTwoThree = 2 / 3; // 0.6667 P
-    var _currentPageRowCount = 0;
 
+     // var _constArNineSixteen = 9 / 16; // 0.5625 P
+    var _constArSixteenNine = 16 / 9; // 1.7778 L
+    var _constArThreeTwo = 3 / 2; // 1.5 L
+    // var _constArTwoThree = 2 / 3; // 0.6667 P
+    var _constImageSeparationWidth = 0;
+    var _constMaxCellsPerRow = 6;
+    var _constMaxRowsPerPage = 1;
+    var _constRowMaxWidth = 800;
+
+
+    var _currentPageRowCount = 0;
     /**
      * The image collection.
      * @type {ImageItem[]}
      */
     var _images;
-
-    var _imageSeparationWidth = 0;
-    var _maxCellsPerRow = 6;
-    var _maxRowsPerPage = 1;
+    /** @type {"next" | "previous"} */
+    var _direction = "next";
+    var _imagesDisplayedCount = 0;
     var _nextPageStartIndex = 0;
-    var _rowMaxWidth = 800;
 
 
     /**
@@ -62,7 +66,7 @@
      * @param {number} startPageImageIndex The page-relative index of the first image in the row.
      */
     function addImageRowToDom(row, startPageImageIndex) {
-        if (_maxRowsPerPage <= _currentPageRowCount) {
+        if (_constMaxRowsPerPage <= _currentPageRowCount) {
             return;
         }
 
@@ -83,8 +87,8 @@
 
         // Find the height that will allow all the images to fit the maximum
         // width.
-        var totalWidth = nominalWidth - ((row.length - 1) * _imageSeparationWidth);
-        var newHeight = (a.height * _rowMaxWidth) / totalWidth;
+        var totalWidth = nominalWidth - ((row.length - 1) * _constImageSeparationWidth);
+        var newHeight = (a.height * _constRowMaxWidth) / totalWidth;
 
         var image;
         for (var j = 0; j < row.length; j++) {
@@ -98,41 +102,39 @@
         }
 
         _currentPageRowCount++;
-        _nextPageStartIndex += row.length;
+        _imagesDisplayedCount += row.length;
+        _nextPageStartIndex = _direction === "next" ? _nextPageStartIndex + row.length : _nextPageStartIndex - row.length;
+        console.log(`direction: ${_direction}, _imagesDisplayedCount: ${_imagesDisplayedCount}, _nextPageStartIndex: ${_nextPageStartIndex}`);
     }
 
     /**
      * Create the image collection and add it to the DOM.
      * @param {HTMLElement} parent 
      * @param {number} [startIndex=0] 
-     * @param {"next" | "previous"} [direction="next"] 
      */
-    function buildImageCollection(parent, startIndex, direction) {
+    function buildImageCollection(parent, startIndex) {
         /** @type {ImageItem[]} */
         var imageCollection = [];
 
         var pageImageIndex = startIndex || 0;
-        var pageDirection = direction || "next";
 
         // This is where the imageCollection could be created with paging before
         // it's passed to createImageCollectionElements.
-        if (pageDirection === "next") {
-            if (_images.length <= _nextPageStartIndex) {
-                return;
-            }
-
-            for (var i = 0; pageImageIndex < _images.length && i < _maxCellsPerRow * _maxRowsPerPage; i++) {
-                imageCollection.push(_images[pageImageIndex]);
-                pageImageIndex++;
-            }
+        var sliceStart;
+        var sliceEnd;
+        if (_direction === "next") {
+            sliceStart = pageImageIndex;
+            sliceEnd = sliceStart + (_constMaxCellsPerRow * _constMaxRowsPerPage);
+            sliceEnd = sliceEnd < _images.length ? sliceEnd : _images.length;
         } else {
-            throw Error("not implemented.");
-            // for (var i = (_maxCellsPerRow * _maxRowsPerPage) - 1; pageImageIndex < _images.length && i < _maxCellsPerRow * _maxRowsPerPage; i++) {
-            //     imageCollection.push(_images[pageImageIndex]);
-            //     pageImageIndex++;
-            // }
+            sliceEnd = pageImageIndex - _imagesDisplayedCount;
+            sliceStart = sliceEnd - (_constMaxCellsPerRow * _constMaxRowsPerPage);
+            sliceStart = 0 <= sliceStart ? sliceStart : 0;
         }
 
+        console.log(`direction: ${_direction}, startIndex: ${startIndex}, sliceStart: ${sliceStart}, sliceEnd: ${sliceEnd}`);
+
+        imageCollection = _images.slice(sliceStart, sliceEnd);
         createPageImageCollectionElements(parent, imageCollection);
     }
 
@@ -147,9 +149,9 @@
         // var _arThreeTwo = 3 / 2; // 1.5 L
         // var _arSixteenNine = 16 / 9; // 1.7778 L
         var cells = 1; // Fills the entire row.
-        if (_arSixteenNine < aspectRatio) {
+        if (_constArSixteenNine < aspectRatio) {
             cells = 6;
-        } else if (_arThreeTwo < aspectRatio) {
+        } else if (_constArThreeTwo < aspectRatio) {
             cells = 3;
         } else if (1 < aspectRatio) {
             cells = 2.5;
@@ -166,16 +168,29 @@
     }
 
     function connectButtons() {
+        var clickHandler = function () {
+            clearPageImageCells();
+            _currentPageRowCount = 0;
+            _imagesDisplayedCount = 0;
+            buildImageCollection(document.getElementById("image-collection"), _nextPageStartIndex);
+        };
+
         var e = document.getElementById("page-prev");
         e.addEventListener("click", function () {
-            console.log("previous");
+            _direction = "previous";
+            if (isImageCollectionBeginning()){
+                return;
+            }
+            clickHandler();
         });
 
         e = document.getElementById("page-next");
         e.addEventListener("click", function () {
-            clearPageImageCells();
-            _currentPageRowCount = 0;
-            buildImageCollection(document.getElementById("image-collection"), _nextPageStartIndex);
+            _direction = "next";
+            if (isImageCollectionEnd()){
+                return;
+            }
+            clickHandler();
         });
     }
 
@@ -386,6 +401,30 @@
         ic.cell.removeChild(ic.img);
     }
 
+    function isImageCollectionBeginning() {
+        if (!_nextPageStartIndex) {
+            return true;
+        }
+
+        if (_nextPageStartIndex - _imagesDisplayedCount < 1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    function isImageCollectionEnd() {
+        if (_images.length <= _nextPageStartIndex) {
+            return true;
+        }
+
+        if (_images.length < _nextPageStartIndex + _imagesDisplayedCount) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Determines when a row can be created.
      * @param {{image: ImageData, img: HTMLImageElement}[]} images 
@@ -412,7 +451,7 @@
                 break;
             }
 
-            if (_maxCellsPerRow < rowCells + images[i].image.imgData.numberOfCells) {
+            if (_constMaxCellsPerRow < rowCells + images[i].image.imgData.numberOfCells) {
                 addImageRowToDom(row, nextIndex);
                 nextIndex += row.length;
                 row = [];
