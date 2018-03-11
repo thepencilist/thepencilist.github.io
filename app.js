@@ -18,7 +18,7 @@
      * @typedef ImgData
      * @property {number} aspectRatio
      * @property {number} height
-     * @property {number} numberOfCells
+     * @property {number} numberOfBlocks
      * @property {number} width
      */
 
@@ -43,16 +43,15 @@
     var _constArThreeTwo = 3 / 2; // 1.5 L
     // var _constArTwoThree = 2 / 3; // 0.6667 P
     var _constImageSeparationWidth = 0;
-    var _constMaxCellsPerRow = 6;
+    var _constMaxBlocksPerRow = 6;
     var _constMaxRowsPerPage = 1;
     var _constRowMaxWidth = 800;
 
 
     var _currentPageRowCount = 0;
-    /**
-     * The image collection.
-     * @type {ImageItem[]}
-     */
+    /** The image collection filtered. @type {ImageItem[]} */
+    var _filteredImages;
+    /** The image collection. @type {ImageItem[]} */
     var _images;
     /** @type {"next" | "previous"} */
     var _direction = "next";
@@ -118,46 +117,45 @@
 
         var pageImageIndex = startIndex || 0;
 
-        // This is where the imageCollection could be created with paging before
-        // it's passed to createImageCollectionElements.
+        // Get the images that might be placed on this page.
         var sliceStart;
         var sliceEnd;
         if (_direction === "next") {
             sliceStart = pageImageIndex;
-            sliceEnd = sliceStart + (_constMaxCellsPerRow * _constMaxRowsPerPage);
-            sliceEnd = sliceEnd < _images.length ? sliceEnd : _images.length;
+            sliceEnd = sliceStart + (_constMaxBlocksPerRow * _constMaxRowsPerPage);
+            sliceEnd = sliceEnd < _filteredImages.length ? sliceEnd : _filteredImages.length;
         } else {
             sliceEnd = pageImageIndex - _imagesDisplayedCount;
-            sliceStart = sliceEnd - (_constMaxCellsPerRow * _constMaxRowsPerPage);
+            sliceStart = sliceEnd - (_constMaxBlocksPerRow * _constMaxRowsPerPage);
             sliceStart = 0 <= sliceStart ? sliceStart : 0;
         }
 
         console.log(`direction: ${_direction}, startIndex: ${startIndex}, sliceStart: ${sliceStart}, sliceEnd: ${sliceEnd}`);
 
-        imageCollection = _images.slice(sliceStart, sliceEnd);
+        imageCollection = _filteredImages.slice(sliceStart, sliceEnd);
         createPageImageCollectionElements(parent, imageCollection);
     }
 
     /**
-     * Calculates how many rows each image will occupy in a row.
+     * Calculates how many blocks each image will occupy in a row.
      * @param {number} aspectRatio The width of the image divided by the height of the image.
-     * @returns {number} The number of cells.
+     * @returns {number} The number of blocks.
      */
-    function calculateCells(aspectRatio) {
+    function calculateBlocks(aspectRatio) {
         // var _arNineSixteen = 9 / 16; // 0.5625 P
         // var _arTwoThree = 2 / 3; // 0.6667 P
         // var _arThreeTwo = 3 / 2; // 1.5 L
         // var _arSixteenNine = 16 / 9; // 1.7778 L
-        var cells = 1; // Fills the entire row.
+        var blocks = 1; // Fills the entire row.
         if (_constArSixteenNine < aspectRatio) {
-            cells = 6;
+            blocks = 6;
         } else if (_constArThreeTwo < aspectRatio) {
-            cells = 3;
+            blocks = 3;
         } else if (1 < aspectRatio) {
-            cells = 2.5;
+            blocks = 2.5;
         }
 
-        return cells;
+        return blocks;
     }
 
     function clearPageImageCells() {
@@ -288,7 +286,7 @@
             var imgData = {
                 aspectRatio: this.naturalWidth / this.naturalHeight,
                 height: this.naturalHeight,
-                numberOfCells: calculateCells(this.naturalWidth / this.naturalHeight),
+                numberOfBlocks: calculateBlocks(this.naturalWidth / this.naturalHeight),
                 pageIndex: image.imgData.pageIndex,
                 width: this.naturalWidth
             };
@@ -433,7 +431,7 @@
      */
     function processRow(images, startIndex) {
         var nextIndex = startIndex;
-        var rowCells = 0;
+        var rowBlocks = 0;
         var row = [];
         for (var i = startIndex; i <= images.length; i++) {
             // All the images in the array have been dealt with. If there is a
@@ -451,15 +449,15 @@
                 break;
             }
 
-            if (_constMaxCellsPerRow < rowCells + images[i].image.imgData.numberOfCells) {
+            if (_constMaxBlocksPerRow < rowBlocks + images[i].image.imgData.numberOfBlocks) {
                 addImageRowToDom(row, nextIndex);
                 nextIndex += row.length;
                 row = [];
-                rowCells = 0;
+                rowBlocks = 0;
             }
 
             row.push(images[i]);
-            rowCells += images[i].image.imgData.numberOfCells;
+            rowBlocks += images[i].image.imgData.numberOfBlocks;
         }
 
         return nextIndex;
@@ -508,6 +506,9 @@
     window.addEventListener("load", function () {
         connectButtons();
         var parent = document.getElementById("image-collection");
+
+        _filteredImages = _images;
+
         buildImageCollection(parent);
     });
 
