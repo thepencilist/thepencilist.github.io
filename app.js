@@ -463,6 +463,146 @@
      * Object with data and functions for displaying a large "hero" image.
      */
     var heroImage = {
+
+        _constImageCellId: "hero-image-cell",
+        _constImageCellImgContainerId: "hero-image-cell-image-container",
+        _constImageCellImgId: "img-hero",
+        _constImageCellInformationClass: "hero-image-cell-information",
+        _constImageCellInformationContainerClass: "hero-image-cell-information-container",
+
+
+        /**
+         * @returns {HTMLImageElement}
+         */
+        findImg: function () {
+            var imageCell = this.getImageCell();
+            return this.findInChildren(imageCell.children, { id: this._constImageCellId });
+        },
+
+        /**
+         * Find an element by id recursively.
+         * @param {HTMLCollection} childElements
+         * @param {{id: string; className: string}} args
+         * @returns {HTMLElement | HTMLElement[]}
+         */
+        findInChildren: function (childElements, args) {
+            /** @type {HTMLElement[]} */
+            var children = [];
+            /** @type {HTMLElement} */
+            var child;
+
+            for (var c = 0; c < childElements.length; c++) {
+                children.push(childElements.item(c));
+            }
+
+            /** @type {HTMLElement[]} */
+            var childrenByClass;
+            while (0 < children.length) {
+                child = children.shift();
+
+                if (args.id) {
+                    if (child.id === args.id) {
+                        return child;
+                    }
+                } else if (args.className) {
+                    if (child.classList.contains(args.className)) {
+                        childrenByClass = childrenByClass || [];
+                        childrenByClass.push(child);
+                    }
+                }
+
+                if (0 < child.childElementCount) {
+                    for (var i = 0; i < child.childElementCount; i++) {
+                        children.push(child.children[i]);
+                    }
+                }
+            }
+
+            if (args.className && childrenByClass) {
+                return childrenByClass;
+            }
+        },
+
+        getImageCell: function () {
+            var collectionParent = document.getElementsByClassName("image-collection-wrapper")[0].parentElement;
+
+            var imageCell = this.findInChildren(collectionParent.children, { id: this._constImageCellId });
+            if (!imageCell) {
+                imageCell = createElement("div", { id: this._constImageCellId }, collectionParent);
+                imageCell.addEventListener("click", function() {
+                    imageCell.style.display = "none";
+                });
+
+                createElement("div", { id: this._constImageCellImgContainerId }, imageCell);
+            }
+
+            return imageCell;
+        },
+
+        /**
+         * Show the hero image.
+         * @param {ImageItem} image
+         */
+        show: function (image) {
+            var collectionParent = document.getElementsByClassName("image-collection-wrapper")[0].parentElement;
+
+            var self = this;
+            var updateImageCell = function (imageItem, imageCellDiv) {
+                imageCellDiv.style.display = null;
+                imageCellDiv.style.height = collectionParent.offsetHeight + "px";
+                self.updateInformation(imageItem, imageCellDiv);
+            };
+
+            /** @type {HTMLDivElement} */
+            var imageCell = this.getImageCell();
+            var img = this.findImg();
+            if (!img) {
+                createImageElement(image, "hero", function (cbImage, cbImg) {
+                    var container = self.findInChildren(imageCell.children, { id: self._constImageCellImgContainerId });
+                    container.appendChild(cbImg);
+                    updateImageCell(cbImage, imageCell);
+                });
+            } else {
+                img.src = image.src;
+                updateImageCell(image, imageCell);
+            }
+
+        },
+
+        /**
+         * Update the text information that's displayed.
+         * @param {ImageItem} image
+         * @param {HTMLDivElement} imageCell
+         */
+        updateInformation: function (image, imageCell) {
+            if (!imageCell) {
+                return;
+            }
+
+            var children = this.findInChildren(imageCell.children, { className: this._constImageCellInformationContainerClass });
+            var infoContainer;
+            if (children) {
+                infoContainer = children[0];
+            } else {
+                infoContainer = createElement("div", { className: this._constImageCellInformationContainerClass }, imageCell);
+            }
+
+            children = this.findInChildren(infoContainer.children, { className: this._constImageCellInformationClass });
+            var info;
+            if (children) {
+                info = children[0];
+            } else {
+                info = createElement("section", { className: this._constImageCellInformationClass }, infoContainer);
+            }
+
+            var date = this.findInChildren(info.children, { id: this._constImageCellInformationClass + "-date" });
+            if (!date) {
+                date = createElement("span", { id: this._constImageCellInformationClass + "-date" }, info);
+            }
+
+            date.innerText = "Date: " + image.date;
+        }
+
     };
 
 
@@ -601,7 +741,7 @@
             } else if (type == thumbnails._constEventImageCellClicked) {
                 /** @type {ImageItem} */
                 var image = data;
-                console.log("%O", image);
+                heroImage.show(image);
             }
         });
 

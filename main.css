@@ -372,3 +372,48 @@ span.icon {
     padding: 0;
     text-align: center;
 }
+
+#hero-image-cell {
+    background-color: rgba(0, 0, 0, 0.25);
+    left: 0;
+    margin: 0 5px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+}
+
+#hero-image-cell-image-container {
+    display: inline-block;
+    height: 100%;
+    position: relative;
+}
+
+#hero-image-cell-image-container::after {
+    content: "";
+}
+
+#img-hero {
+    height: 100%;
+}
+
+.hero-image-cell-information-container {
+    background-color: white;
+    display: inline-block;
+    height: 100%;
+    position: relative;
+    width: 40%;
+}
+
+.hero-image-cell-information-container::after {
+    content: "";
+}
+
+.hero-image-cell-information {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
