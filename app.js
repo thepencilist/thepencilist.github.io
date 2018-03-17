@@ -40,7 +40,9 @@
      * @typedef ImgData
      * @property {number} aspectRatio
      * @property {number} height
-     * @property {number} numberOfBlocks
+     * @property {number} naturalHeight
+     * @property {number} naturalWidth
+     * @property {number} [numberOfBlocks] To display a row of thumbnails.
      * @property {number} width
      */
 
@@ -59,6 +61,7 @@
      * @property {string} [display]
      */
 
+    var _constButtonStyleDisplay = "block";
     /** The image collection filtered. @type {ImageItem[]} */
     var _filteredImages = _images;
 
@@ -67,10 +70,14 @@
      */
     var thumbnails = {
 
+        /** @type {((type: string, data?: any) => void)[]} */
+        _callbacks: [],
         // _constArNineSixteen: 9 / 16, // 0.5625 P
         _constArSixteenNine: 16 / 9, // 1.7778 L
         _constArThreeTwo: 3 / 2, // 1.5 L
         // _constArTwoThree: 2 / 3, // 0.6667 P
+        _constEventImageCellClicked: "image-cell-clicked",
+        _constEventImageRowAdded: "image-row-added",
         _constImageSeparationWidth: 0,
         _constMaxBlocksPerRow: 6,
         _constMaxRowsPerPage: 1,
@@ -81,6 +88,17 @@
         _imagesDisplayedCount: 0,
         _nextPageStartIndex: 0,
 
+
+
+        /**
+         * Add a callback to be informed of changes. Warning: I have no need to
+         * release these callbacks so they will remain in memory until the page
+         * is reloaded.
+         * @param {(type: string, data?: any) => void} callback
+         */
+        addCallback: function (callback) {
+            this._callbacks.push(callback);
+        },
 
         /**
          * Add a row of images to the DOM.
@@ -126,6 +144,7 @@
             this._currentPageRowCount++;
             this._imagesDisplayedCount += row.length;
             this._nextPageStartIndex = this._direction === "next" ? this._nextPageStartIndex + row.length : this._nextPageStartIndex - row.length;
+            this.invokeCallbacks(this._constEventImageRowAdded);
             console.log(`direction: ${this._direction}, _imagesDisplayedCount: ${this._imagesDisplayedCount}, _nextPageStartIndex: ${this._nextPageStartIndex}`);
         },
 
@@ -270,7 +289,10 @@
 
                 // Cell info covers the entire image, any click events must be
                 // passed from it to the img element.
-                ic.overlay.addEventListener("click", function () { img.click(); });
+                var self = this;
+                ic.overlay.addEventListener("click", function () {
+                    self.invokeCallbacks(self._constEventImageCellClicked, image);
+                });
             }
         },
 
@@ -293,6 +315,17 @@
             }
 
             ic.cell.removeChild(ic.img);
+        },
+
+        /**
+         * Invoke the callbacks.
+         * @param {string} type
+         * @param {any} [data]
+         */
+        invokeCallbacks: function (type, data) {
+            for (var i = 0; i < this._callbacks.length; i++) {
+                this._callbacks[i](type, data);
+            }
         },
 
         isImageCollectionBeginning: function () {
@@ -426,14 +459,21 @@
     };
 
 
+    /**
+     * Object with data and functions for displaying a large "hero" image.
+     */
+    var heroImage = {
+    };
+
+
     function connectButtons() {
         var e = document.getElementById("page-prev");
-        e.addEventListener("click", function () {
+        e.addEventListener("click", function (evt) {
             thumbnails.pagePrevious();
         });
 
         e = document.getElementById("page-next");
-        e.addEventListener("click", function () {
+        e.addEventListener("click", function (evt) {
             thumbnails.pageNext();
         });
     }
@@ -491,7 +531,7 @@
         img = document.getElementById(strId);
         if (!img) {
             img = createElement("img", { id: strId });
-            img.addEventListener("click", function () { console.log("clicked"); });
+            // img.addEventListener("click", function () { console.log("clicked"); });
         }
 
         loadHandler = function () {
@@ -503,6 +543,8 @@
             var imgData = {
                 aspectRatio: this.naturalWidth / this.naturalHeight,
                 height: this.naturalHeight,
+                naturalHeight: this.naturalHeight,
+                naturalWidth: this.naturalWidth,
                 pageIndex: image.imgData.pageIndex,
                 width: this.naturalWidth
             };
@@ -543,6 +585,26 @@
     window.addEventListener("load", function () {
         connectButtons();
         _filteredImages = _images;
+
+        thumbnails.addCallback(function (type, data) {
+            if (type === thumbnails._constEventImageRowAdded) {
+                var nextButton = document.getElementById("page-next");
+                var prevButton = document.getElementById("page-prev");
+                if (thumbnails.isImageCollectionBeginning()) {
+                    prevButton.style.display = "none";
+                } else if (thumbnails.isImageCollectionEnd()) {
+                    nextButton.style.display = "none";
+                } else {
+                    nextButton.style.display = _constButtonStyleDisplay;
+                    prevButton.style.display = _constButtonStyleDisplay;
+                }
+            } else if (type == thumbnails._constEventImageCellClicked) {
+                /** @type {ImageItem} */
+                var image = data;
+                console.log("%O", image);
+            }
+        });
+
         var parent = document.getElementById("image-collection");
         thumbnails.buildImageCollection(parent);
     });

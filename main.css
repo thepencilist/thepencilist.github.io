@@ -57,9 +57,7 @@ span.icon {
 }
 
 .description-container {
-    background-color: rgb(53, 50, 48);
     border-radius: 0 0 3px 3px;
-    color: rgb(201, 200, 200);
     margin: 0 5px 0 5px;
     padding: 60px 0 0 0;
 }
@@ -167,7 +165,7 @@ span.icon {
     display: none;
 }
 
-.content h1, .content h2 , .content p, .image-cell-info-container {
+.content h1, .content h2 , .content p, .image-cell-info-container, button.description {
     font-family: "Karla", sans-serif;
     letter-spacing: -1px;
     line-height: 1.4;
@@ -296,6 +294,7 @@ span.icon {
 
 #image-collection {
     margin: 0 auto 0 auto;
+    min-height: 400px;
     min-width: 800px;
     width: 800px;
 }
@@ -343,4 +342,33 @@ span.icon {
 .image-cell-info {
     color: white;
     position: relative;
+}
+
+.reverse-text {
+    background-color: rgb(53, 50, 48);
+    color: rgb(201, 200, 200);
+}
+
+.button-navigate {
+    height: 40px;
+    width: 150px;
+}
+
+.button-collection-h {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.button-collection-h > button:last-child {
+    margin-right: 0;
+}
+
+.button-collection-h > button {
+    border: 0;
+    display: block;
+    font-size: 160%;
+    margin: 0 10px 0 0;
+    padding: 0;
+    text-align: center;
 }
