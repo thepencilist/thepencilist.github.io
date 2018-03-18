@@ -389,6 +389,7 @@ span.icon {
 }
 
 #hero-image-cell {
+    background-color: rgb(27, 25, 24);
     border-radius: 3px;
     box-sizing: border-box;
     height: 100%;

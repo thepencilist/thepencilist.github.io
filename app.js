@@ -176,7 +176,7 @@
             console.log(`direction: ${this._direction}, startIndex: ${startIndex}, sliceStart: ${sliceStart}, sliceEnd: ${sliceEnd}`);
 
             imageCollection = _filteredImages.slice(sliceStart, sliceEnd);
-            this.createPageImageCollectionElements(parent, imageCollection);
+            this.createPageImageCollectionElements(parent, imageCollection, sliceStart);
         },
 
         /**
@@ -213,13 +213,22 @@
          */
         createImageCell: function (image, id, parent) {
             var container = document.getElementById("cell-" + id);
-            if (container == null) {
+            if (container === null) {
                 container = createElement("div", { className: "image-cell-container", id: "cell-" + id }, parent);
                 var imageCell = createElement("div", { className: "image-cell" }, container);
 
                 // Don't create the img element here. That will be added later as needed.
 
                 var overlay = createElement("div", { className: "image-cell-info-overlay" }, imageCell);
+                var self = this;
+                overlay.addEventListener("click", function () {
+                    var img = imageCell.getElementsByTagName("img")[0];
+                    if (img.dataset.filteredIndex) {
+                        var eventImage = _filteredImages[parseInt(img.dataset.filteredIndex)];
+                        self.invokeCallbacks(self._constEventImageCellClicked, eventImage);
+                    }
+                });
+
                 var cellInfoContainer = createElement("div", { className: "image-cell-info-container" }, overlay);
                 createElement("h1", { className: "image-cell-info" }, cellInfoContainer);
 
@@ -237,8 +246,9 @@
          * Create the layout for images on the page.
          * @param {HTMLElement} parent
          * @param {ImageItem[]} images The images to display on this page.
+         * @param {number} startFilteredIndex The index of the first item in images that corresponds to _filteredImages.
          */
-        createPageImageCollectionElements: function (parent, images) {
+        createPageImageCollectionElements: function (parent, images, startFilteredIndex) {
             // Create the image cells.
             var image;
             var imageCell;
@@ -261,8 +271,8 @@
 
                 // Call another function to create the proper scope for working with
                 // a single image object.
-                createImageElement(images[j], j, function (image, img) {
-                    image.imgData.numberOfBlocks = thumbnails.calculateBlocks(img.naturalWidth / img.naturalHeight)
+                createImageElement(images[j], j, startFilteredIndex + j, function (image, img) {
+                    image.imgData.numberOfBlocks = thumbnails.calculateBlocks(img.naturalWidth / img.naturalHeight);
                     loadedImages[image.imgData.pageIndex] = { image: image, img: img };
                     processIndex = thumbnails.processRow(loadedImages, processIndex);
                 });
@@ -287,13 +297,6 @@
                 } else {
                     ic.overlay.insertAdjacentElement("beforebegin", img);
                 }
-
-                // Cell info covers the entire image, any click events must be
-                // passed from it to the img element.
-                var self = this;
-                ic.overlay.addEventListener("click", function () {
-                    self.invokeCallbacks(self._constEventImageCellClicked, image);
-                });
             }
         },
 
@@ -491,7 +494,7 @@
             var modal = this.getModal();
             var cell = findInChildren(modal.children, { id: this._constImageCellId });
             if (!cell) {
-                cell = createElement("div", { id: this._constImageCellId }, modal)
+                cell = createElement("div", { id: this._constImageCellId }, modal);
                 var imageContainer = createElement("div", { id: this._constImageCellImgContainerId }, cell);
                 createElement("div", { id: this._constImageCellImgPositionId }, imageContainer);
             } else {
@@ -513,7 +516,7 @@
             }
 
             //_constImageCellInformationPositionClass
-            var children = findInChildren(cell.children, { className: this._constImageCellInformationPositionClass });
+            children = findInChildren(cell.children, { className: this._constImageCellInformationPositionClass });
             /** @type {HTMLDivElement} */
             var infoPosition;
             if (children) {
@@ -565,7 +568,7 @@
             var imageCell = this.getCell();
             var img = this.findImg();
             if (!img) {
-                createImageElement(image, "hero", function (cbImage, cbImg) {
+                createImageElement(image, "hero", -1, function (cbImage, cbImg) {
                     var container = findInChildren(imageCell.children, { id: self._constImageCellImgPositionId });
                     container.appendChild(cbImg);
                     updateImageCell(cbImage);
@@ -618,12 +621,12 @@
 
     function connectButtons() {
         var e = document.getElementById("page-prev");
-        e.addEventListener("click", function (evt) {
+        e.addEventListener("click", function () {
             thumbnails.pagePrevious();
         });
 
         e = document.getElementById("page-next");
-        e.addEventListener("click", function (evt) {
+        e.addEventListener("click", function () {
             thumbnails.pageNext();
         });
     }
@@ -666,9 +669,10 @@
      * Create the layout for a single image on the page.
      * @param {ImageItem} image
      * @param {number} id
+     * @param {number} filteredIndex
      * @param {(image: ImageItem, img: HTMLImageElement) => void} callback
      */
-    function createImageElement(image, id, callback) {
+    function createImageElement(image, id, filteredIndex, callback) {
         /** @type {HTMLImageElement} */
         var img;
         /** @type {(evt: Event) => void} */
@@ -702,6 +706,12 @@
 
             callback(image, this);
         };
+
+        if (filteredIndex !== null && -1 < filteredIndex) {
+            img.dataset.filteredIndex = "" + filteredIndex;
+        } else {
+            img.removeAttribute("data-filtered-index");
+        }
 
         img.addEventListener("load", loadHandler);
         img.src = image.src;
@@ -749,7 +759,7 @@
         if (args.className && childrenByClass) {
             return childrenByClass;
         }
-    };
+    }
 
     /**
      * Set the inner text of one or more elements.
@@ -791,7 +801,7 @@
                     nextButton.style.display = _constButtonStyleDisplay;
                     prevButton.style.display = _constButtonStyleDisplay;
                 }
-            } else if (type == thumbnails._constEventImageCellClicked) {
+            } else if (type === thumbnails._constEventImageCellClicked) {
                 /** @type {ImageItem} */
                 var image = data;
                 heroImage.show(image);
