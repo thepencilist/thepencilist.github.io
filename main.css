@@ -35,8 +35,10 @@ body {
 }
 
 h1 {
-    font-family: sans-serif;
+    font-family: "Karla", sans-serif;
     font-size: 225%;
+    letter-spacing: -1px;
+    line-height: 1.4;
 }
 
 ol {
@@ -127,7 +129,7 @@ span.icon {
     margin: 0 0 0 20px;
 }
 
-.description p {
+.description p, .cell-information-item {
     font-family: "Yrsa", serif;
     font-size: 1.9em;
     line-height: 1.2;
@@ -165,7 +167,7 @@ span.icon {
     display: none;
 }
 
-.content h1, .content h2 , .content p, .image-cell-info-container, button.description {
+.content h2 , .content p, .image-cell-info-container, button.description {
     font-family: "Karla", sans-serif;
     letter-spacing: -1px;
     line-height: 1.4;
@@ -344,7 +346,7 @@ span.icon {
     position: relative;
 }
 
-.reverse-text {
+#hero-image-cell, .reverse-text {
     background-color: rgb(53, 50, 48);
     color: rgb(201, 200, 200);
 }
@@ -366,6 +368,7 @@ span.icon {
 
 .button-collection-h > button {
     border: 0;
+    border-radius: 3px;
     display: block;
     font-size: 160%;
     margin: 0 10px 0 0;
@@ -373,36 +376,57 @@ span.icon {
     text-align: center;
 }
 
-#hero-image-cell {
-    background-color: rgba(0, 0, 0, 0.25);
+#hero-image-cell-modal {
+    background-color: rgba(53, 50, 48, 0.75);
+    bottom: 0;
     left: 0;
-    margin: 0 5px;
     overflow: hidden;
+    padding: 20px 20px 40px 20px;
     position: absolute;
     right: 0;
     text-align: center;
     top: 0;
 }
 
+#hero-image-cell {
+    border-radius: 3px;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 10px;
+    position: relative;
+    width: 100%;
+}
+
 #hero-image-cell-image-container {
     display: inline-block;
     height: 100%;
+    max-width: 600px;
     position: relative;
+    width: 100%;
 }
 
 #hero-image-cell-image-container::after {
     content: "";
 }
 
+#hero-image-cell-image-position {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
 #img-hero {
-    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .hero-image-cell-information-container {
-    background-color: white;
     display: inline-block;
     height: 100%;
     position: relative;
+    text-align: left;
     width: 40%;
 }
 
@@ -410,10 +434,20 @@ span.icon {
     content: "";
 }
 
-.hero-image-cell-information {
+.hero-image-cell-information-position {
     bottom: 0;
     left: 0;
+    padding: 0 0 0 10px;
     position: absolute;
     right: 0;
     top: 0;
+}
+
+#hero-image-cell-information-title {
+    font-size: 300%;
+    margin-bottom: 10px;
+}
+
+.cell-information-item {
+    margin-bottom: 10px;
 }

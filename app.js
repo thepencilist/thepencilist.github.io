@@ -33,6 +33,7 @@
      * @property {number} [pageIndex]
      * @property {string} src
      * @property {string[]} tags
+     * @property {string} title
      */
 
     /**
@@ -466,77 +467,87 @@
 
         _constImageCellId: "hero-image-cell",
         _constImageCellImgContainerId: "hero-image-cell-image-container",
+        _constImageCellImgPositionId: "hero-image-cell-image-position",
         _constImageCellImgId: "img-hero",
         _constImageCellInformationClass: "hero-image-cell-information",
         _constImageCellInformationContainerClass: "hero-image-cell-information-container",
+        _constImageCellInformationPositionClass: "hero-image-cell-information-position",
+        _constImageCellModalId: "hero-image-cell-modal",
 
 
         /**
          * @returns {HTMLImageElement}
          */
         findImg: function () {
-            var imageCell = this.getImageCell();
-            return this.findInChildren(imageCell.children, { id: this._constImageCellId });
+            var imageCell = this.getCell();
+            return findInChildren(imageCell.children, { id: this._constImageCellId });
         },
 
         /**
-         * Find an element by id recursively.
-         * @param {HTMLCollection} childElements
-         * @param {{id: string; className: string}} args
-         * @returns {HTMLElement | HTMLElement[]}
+         * Gets the image cell element.
+         * @returns {HTMLDivElement}
          */
-        findInChildren: function (childElements, args) {
-            /** @type {HTMLElement[]} */
-            var children = [];
-            /** @type {HTMLElement} */
-            var child;
-
-            for (var c = 0; c < childElements.length; c++) {
-                children.push(childElements.item(c));
+        getCell: function () {
+            var modal = this.getModal();
+            var cell = findInChildren(modal.children, { id: this._constImageCellId });
+            if (!cell) {
+                cell = createElement("div", { id: this._constImageCellId }, modal)
+                var imageContainer = createElement("div", { id: this._constImageCellImgContainerId }, cell);
+                createElement("div", { id: this._constImageCellImgPositionId }, imageContainer);
+            } else {
+                cell = findInChildren(modal.children, { id: this._constImageCellId });
             }
 
-            /** @type {HTMLElement[]} */
-            var childrenByClass;
-            while (0 < children.length) {
-                child = children.shift();
-
-                if (args.id) {
-                    if (child.id === args.id) {
-                        return child;
-                    }
-                } else if (args.className) {
-                    if (child.classList.contains(args.className)) {
-                        childrenByClass = childrenByClass || [];
-                        childrenByClass.push(child);
-                    }
-                }
-
-                if (0 < child.childElementCount) {
-                    for (var i = 0; i < child.childElementCount; i++) {
-                        children.push(child.children[i]);
-                    }
-                }
-            }
-
-            if (args.className && childrenByClass) {
-                return childrenByClass;
-            }
+            return cell;
         },
 
-        getImageCell: function () {
-            var collectionParent = document.getElementsByClassName("image-collection-wrapper")[0].parentElement;
-
-            var imageCell = this.findInChildren(collectionParent.children, { id: this._constImageCellId });
-            if (!imageCell) {
-                imageCell = createElement("div", { id: this._constImageCellId }, collectionParent);
-                imageCell.addEventListener("click", function() {
-                    imageCell.style.display = "none";
-                });
-
-                createElement("div", { id: this._constImageCellImgContainerId }, imageCell);
+        getInformation: function () {
+            var cell = this.getCell();
+            var children = findInChildren(cell.children, { className: this._constImageCellInformationContainerClass });
+            /** @type {HTMLDivElement} */
+            var infoContainer;
+            if (children) {
+                infoContainer = children[0];
+            } else {
+                infoContainer = createElement("div", { className: this._constImageCellInformationContainerClass }, cell);
             }
 
-            return imageCell;
+            //_constImageCellInformationPositionClass
+            var children = findInChildren(cell.children, { className: this._constImageCellInformationPositionClass });
+            /** @type {HTMLDivElement} */
+            var infoPosition;
+            if (children) {
+                infoPosition = children[0];
+            } else {
+                infoPosition = createElement("div", { className: this._constImageCellInformationPositionClass }, infoContainer);
+            }
+
+            children = findInChildren(infoPosition.children, { className: this._constImageCellInformationClass });
+            /** @type {HTMLDivElement} */
+            var info;
+            if (children) {
+                info = children[0];
+            } else {
+                info = createElement("section", { className: this._constImageCellInformationClass }, infoPosition);
+            }
+
+            return info;
+        },
+
+        /**
+ * @returns {HTMLDivElement}
+ */
+        getModal: function () {
+            var body = document.body;
+            var modal = findInChildren(body.children, { id: this._constImageCellModalId });
+            if (!modal) {
+                modal = createElement("div", { id: this._constImageCellModalId }, body);
+                modal.addEventListener("click", function () {
+                    modal.style.display = "none";
+                });
+            }
+
+            return modal;
         },
 
         /**
@@ -544,27 +555,24 @@
          * @param {ImageItem} image
          */
         show: function (image) {
-            var collectionParent = document.getElementsByClassName("image-collection-wrapper")[0].parentElement;
-
             var self = this;
-            var updateImageCell = function (imageItem, imageCellDiv) {
-                imageCellDiv.style.display = null;
-                imageCellDiv.style.height = collectionParent.offsetHeight + "px";
-                self.updateInformation(imageItem, imageCellDiv);
+            /** @type {(imageItem: ImageItem) => void} */
+            var updateImageCell = function (imageItem) {
+                self.getModal().style.display = null;
+                self.updateInformation(imageItem);
             };
 
-            /** @type {HTMLDivElement} */
-            var imageCell = this.getImageCell();
+            var imageCell = this.getCell();
             var img = this.findImg();
             if (!img) {
                 createImageElement(image, "hero", function (cbImage, cbImg) {
-                    var container = self.findInChildren(imageCell.children, { id: self._constImageCellImgContainerId });
+                    var container = findInChildren(imageCell.children, { id: self._constImageCellImgPositionId });
                     container.appendChild(cbImg);
-                    updateImageCell(cbImage, imageCell);
+                    updateImageCell(cbImage);
                 });
             } else {
                 img.src = image.src;
-                updateImageCell(image, imageCell);
+                updateImageCell(image);
             }
 
         },
@@ -572,35 +580,37 @@
         /**
          * Update the text information that's displayed.
          * @param {ImageItem} image
-         * @param {HTMLDivElement} imageCell
          */
-        updateInformation: function (image, imageCell) {
-            if (!imageCell) {
-                return;
+        updateInformation: function (image) {
+            var info = this.getInformation();
+
+            /** @type {HTMLHeadingElement} */
+            var title = findInChildren(info.children, { id: this._constImageCellInformationClass + "-title" });
+            if (!title) {
+                title = createElement("h1", { id: this._constImageCellInformationClass + "-title" }, info);
             }
 
-            var children = this.findInChildren(imageCell.children, { className: this._constImageCellInformationContainerClass });
-            var infoContainer;
-            if (children) {
-                infoContainer = children[0];
-            } else {
-                infoContainer = createElement("div", { className: this._constImageCellInformationContainerClass }, imageCell);
-            }
-
-            children = this.findInChildren(infoContainer.children, { className: this._constImageCellInformationClass });
-            var info;
-            if (children) {
-                info = children[0];
-            } else {
-                info = createElement("section", { className: this._constImageCellInformationClass }, infoContainer);
-            }
-
-            var date = this.findInChildren(info.children, { id: this._constImageCellInformationClass + "-date" });
+            /** @type {HTMLParagraphElement} */
+            var date = findInChildren(info.children, { id: this._constImageCellInformationClass + "-date" });
             if (!date) {
-                date = createElement("span", { id: this._constImageCellInformationClass + "-date" }, info);
+                date = createElement("p", { className: "cell-information-item", id: this._constImageCellInformationClass + "-date" }, info);
             }
 
+            title.innerText = image.title;
             date.innerText = "Date: " + image.date;
+
+            var descriptions = findInChildren(info.children, { className: this._constImageCellInformationClass + "-description" }, info);
+            descriptions = descriptions || [];
+            /** @type {string} */
+            var d;
+            /** @type {HTMLParagraphElement} */
+            var e;
+            for (var i = 0; i < image.description.length || i < descriptions.length; i++) {
+                d = i < image.description.length ? image.description[i] : null;
+                e = i < descriptions.length ? descriptions[i] : createElement("p", { className: "cell-information-item " + this._constImageCellInformationClass + "-description" }, info);
+
+                e.innerHTML = d;
+            }
         }
 
     };
@@ -671,7 +681,6 @@
         img = document.getElementById(strId);
         if (!img) {
             img = createElement("img", { id: strId });
-            // img.addEventListener("click", function () { console.log("clicked"); });
         }
 
         loadHandler = function () {
@@ -697,6 +706,50 @@
         img.addEventListener("load", loadHandler);
         img.src = image.src;
     }
+
+    /**
+     * Find an element by id or class recursively.
+     * @param {HTMLCollection} childElements
+     * @param {{id: string; className: string}} args
+     * @returns {HTMLElement | HTMLElement[]}
+     */
+    function findInChildren(childElements, args) {
+        /** @type {HTMLElement[]} */
+        var children = [];
+        /** @type {HTMLElement} */
+        var child;
+
+        for (var c = 0; c < childElements.length; c++) {
+            children.push(childElements.item(c));
+        }
+
+        /** @type {HTMLElement[]} */
+        var childrenByClass;
+        while (0 < children.length) {
+            child = children.shift();
+
+            if (args.id) {
+                if (child.id === args.id) {
+                    return child;
+                }
+            } else if (args.className) {
+                if (child.classList.contains(args.className)) {
+                    childrenByClass = childrenByClass || [];
+                    childrenByClass.push(child);
+                }
+            }
+
+            if (0 < child.childElementCount) {
+                for (var i = 0; i < child.childElementCount; i++) {
+                    children.push(child.children[i]);
+                }
+            }
+        }
+
+        if (args.className && childrenByClass) {
+            return childrenByClass;
+        }
+    };
 
     /**
      * Set the inner text of one or more elements.
@@ -758,7 +811,8 @@
                 "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
             ],
             src: "drawings/bella/bella.jpg",
-            tags: ["cat", "color", "drawing"]
+            tags: ["cat", "color", "drawing", "pets"],
+            title: "Bella"
         },
 
         {
@@ -768,7 +822,8 @@
                 "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
             ],
             src: "drawings/kitty/kitty.jpg",
-            tags: ["commission", "dog", "drawing"]
+            tags: ["commission", "dog", "drawing", "pets"],
+            title: "Kitty"
         },
 
         {
@@ -778,7 +833,8 @@
                 "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
             ],
             src: "drawings/moose/moose.jpg",
-            tags: ["color", "commission", "dog", "drawing"]
+            tags: ["color", "commission", "dog", "drawing", "pets"],
+            title: "Moose"
         },
         {
             date: "January 22, 2018",
@@ -787,7 +843,8 @@
                 "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
             ],
             src: "drawings/junior-angus/junior-angus.jpg",
-            tags: ["cat", "drawing"]
+            tags: ["cat", "drawing", "pets"],
+            title: "Junior and Angus"
         },
         {
             date: "January 11, 2018",
@@ -796,7 +853,8 @@
                 "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
             ],
             src: "drawings/beach-seaweed/beach-seaweed.jpg",
-            tags: ["color", "drawing", "maine", "nature"]
+            tags: ["color", "drawing", "maine", "nature"],
+            title: "Geologist's Dream"
         },
         {
             date: "December 12, 2017",
@@ -805,7 +863,8 @@
                 "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
             ],
             src: "drawings/frozen-leaf/frozen-leaf.jpg",
-            tags: ["drawing", "nature"]
+            tags: ["drawing", "nature"],
+            title: "Crispy"
         },
         {
             date: "December 8, 2017",
@@ -814,7 +873,8 @@
                 "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
             ],
             src: "drawings/beach-red-leaf/beach-red-leaf.jpg",
-            tags: ["color", "drawing", "maine", "nature"]
+            tags: ["color", "drawing", "maine", "nature"],
+            title: "Red Leaf Beach"
         },
         {
             date: "December 20, 2017",
@@ -823,7 +883,8 @@
                 "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
             ],
             src: "drawings/junior-couch/junior-couch.jpg",
-            tags: ["cat", "color", "drawing"]
+            tags: ["cat", "color", "drawing", "pets"],
+            title: "Junior"
         },
         {
             date: "December 9, 2017",
@@ -832,7 +893,8 @@
                 "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
             ],
             src: "drawings/dog/drawing.jpg",
-            tags: ["commission", "dog", "drawing"]
+            tags: ["commission", "dog", "drawing", "pets"],
+            title: "Jack"
         }
     ];
 
