@@ -1,9 +1,16 @@
-module.exports = {
+{
     "env": {
         "browser": true
     },
     "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
     "rules": {
+        "eqeqeq": [
+            "error",
+            "always"
+        ],
         "indent": [
             "error",
             4
@@ -21,4 +28,4 @@ module.exports = {
             "always"
         ]
     }
-};
+}
