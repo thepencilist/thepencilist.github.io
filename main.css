@@ -411,7 +411,10 @@ span.icon {
 }
 
 #hero-image-cell-image-position {
+    align-items: center;
     bottom: 0;
+    display: flex;
+    justify-content: center;
     left: 0;
     position: absolute;
     right: 0;
