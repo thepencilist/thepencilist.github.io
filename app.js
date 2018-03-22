@@ -81,7 +81,7 @@
         _constEventImageRowAdded: "image-row-added",
         _constImageSeparationWidth: 0,
         _constMaxBlocksPerRow: 6,
-        _constMaxRowsPerPage: 1,
+        _constMaxRowsPerPage: 15,
         _constRowMaxWidth: 800,
         _currentPageRowCount: 0,
         /** @type {"next" | "previous"} */
@@ -799,7 +799,11 @@
             if (type === thumbnails._constEventImageRowAdded) {
                 var nextButton = document.getElementById("page-next");
                 var prevButton = document.getElementById("page-prev");
-                if (thumbnails.isImageCollectionBeginning()) {
+                if (thumbnails.isImageCollectionBeginning() && thumbnails.isImageCollectionEnd()) {
+                    prevButton.style.display = "none";
+                    nextButton.style.display = "none";
+                }
+                else if (thumbnails.isImageCollectionBeginning()) {
                     prevButton.style.display = "none";
                 } else if (thumbnails.isImageCollectionEnd()) {
                     nextButton.style.display = "none";
