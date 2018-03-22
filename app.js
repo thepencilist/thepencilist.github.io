@@ -515,7 +515,6 @@
                 infoContainer = createElement("div", { className: this._constImageCellInformationContainerClass }, cell);
             }
 
-            //_constImageCellInformationPositionClass
             children = findInChildren(cell.children, { className: this._constImageCellInformationPositionClass });
             /** @type {HTMLDivElement} */
             var infoPosition;
@@ -524,6 +523,13 @@
             } else {
                 infoPosition = createElement("div", { className: this._constImageCellInformationPositionClass }, infoContainer);
             }
+
+            children = findInChildren(infoContainer.children, { className: "close-container" });
+            if (!children) {
+                var closeContainer = createElement("div", { className: "close-container" }, infoContainer);
+                createElement("div", { className: "close" }, closeContainer);
+            }
+
 
             children = findInChildren(infoPosition.children, { className: this._constImageCellInformationClass });
             /** @type {HTMLDivElement} */

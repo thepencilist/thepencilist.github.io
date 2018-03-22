@@ -452,3 +452,31 @@ span.icon {
 .cell-information-item {
     margin-bottom: 10px;
 }
+
+.close {
+    background-color: rgb(53, 50, 48);
+    height: 25%;
+    margin-top: 50%;
+    position: absolute;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+.close::after {
+    background-color: rgb(53, 50, 48);
+    content: "";
+    height: 400%;
+    margin: 12.5% 0 0 12.5%;
+    position: absolute;
+    transform: translateX(100%) translateY(-50%);
+    width: 25%;
+}
+
+.close-container {
+    height: 25px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    transform: rotate(45deg);
+    width: 25px;
+}
