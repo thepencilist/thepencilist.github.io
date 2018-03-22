@@ -450,7 +450,7 @@
          * @param {HTMLDivElement} container
          */
         updateImageCellContents: function (image, container) {
-            setInnerText(container, "image-cell-info", image.src.split("/").pop());
+            setInnerText(container, "image-cell-info", image.title);
 
             var children = container.getElementsByClassName("content");
             if (children && 0 < children.length) {

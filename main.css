@@ -329,7 +329,7 @@ span.icon {
 }
 
 .image-cell-info-container {
-    background-color: #777777CC;
+    background-color: rgb(53, 50, 48);
     bottom: 0;
     display: block;
     left: 0;
@@ -342,8 +342,12 @@ span.icon {
 }
 
 .image-cell-info {
-    color: white;
+    color: rgb(201, 200, 200);
     position: relative;
+}
+
+h1.image-cell-info {
+    font-size: initial;
 }
 
 #hero-image-cell, .reverse-text {
@@ -441,7 +445,7 @@ span.icon {
 .hero-image-cell-information-position {
     bottom: 0;
     left: 0;
-    padding: 0 0 0 10px;
+    padding: 0 0 0 20px;
     position: absolute;
     right: 0;
     top: 0;
