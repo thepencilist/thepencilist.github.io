@@ -146,7 +146,7 @@
             this._imagesDisplayedCount += row.length;
             this._nextPageStartIndex = this._direction === "next" ? this._nextPageStartIndex + row.length : this._nextPageStartIndex - row.length;
             this.invokeCallbacks(this._constEventImageRowAdded);
-            console.log(`direction: ${this._direction}, _imagesDisplayedCount: ${this._imagesDisplayedCount}, _nextPageStartIndex: ${this._nextPageStartIndex}`);
+            // console.log(`direction: ${this._direction}, _imagesDisplayedCount: ${this._imagesDisplayedCount}, _nextPageStartIndex: ${this._nextPageStartIndex}`);
         },
 
         /**
@@ -173,7 +173,7 @@
                 sliceStart = 0 <= sliceStart ? sliceStart : 0;
             }
 
-            console.log(`direction: ${this._direction}, startIndex: ${startIndex}, sliceStart: ${sliceStart}, sliceEnd: ${sliceEnd}`);
+            // console.log(`direction: ${this._direction}, startIndex: ${startIndex}, sliceStart: ${sliceStart}, sliceEnd: ${sliceEnd}`);
 
             imageCollection = _filteredImages.slice(sliceStart, sliceEnd);
             this.createPageImageCollectionElements(parent, imageCollection, sliceStart);
