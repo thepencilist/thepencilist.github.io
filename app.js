@@ -349,10 +349,6 @@
                 return true;
             }
 
-            if (_images.length < this._nextPageStartIndex + this._imagesDisplayedCount) {
-                return true;
-            }
-
             return false;
         },
 
@@ -799,17 +795,17 @@
             if (type === thumbnails._constEventImageRowAdded) {
                 var nextButton = document.getElementById("page-next");
                 var prevButton = document.getElementById("page-prev");
-                if (thumbnails.isImageCollectionBeginning() && thumbnails.isImageCollectionEnd()) {
-                    prevButton.style.display = "none";
-                    nextButton.style.display = "none";
-                }
-                else if (thumbnails.isImageCollectionBeginning()) {
-                    prevButton.style.display = "none";
-                } else if (thumbnails.isImageCollectionEnd()) {
-                    nextButton.style.display = "none";
-                } else {
+                var isBegin = thumbnails.isImageCollectionBeginning();
+                var isEnd = thumbnails.isImageCollectionEnd();
+                if (!isEnd && !isBegin) {
                     nextButton.style.display = _constButtonStyleDisplay;
                     prevButton.style.display = _constButtonStyleDisplay;
+                } else if (isBegin && isEnd) {
+                    nextButton.style.display = "none";
+                    prevButton.style.display = "none";
+                } else {
+                    nextButton.style.display = isEnd ? "none" : _constButtonStyleDisplay;
+                    prevButton.style.display = isBegin ? "none" : _constButtonStyleDisplay;
                 }
             } else if (type === thumbnails._constEventImageCellClicked) {
                 /** @type {ImageItem} */
