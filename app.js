@@ -576,7 +576,7 @@
             var self = this;
             /** @type {(imageItem: ImageItem) => void} */
             var updateImageCell = function (imageItem) {
-                self.getModal().style.display = null;
+                self.getModal().style.removeProperty("display");
                 self.updateInformation(imageItem);
             };
 
