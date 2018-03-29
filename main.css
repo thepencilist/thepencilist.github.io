@@ -405,7 +405,7 @@ h1.image-cell-info {
 #hero-image-cell-image-container {
     display: inline-block;
     height: 100%;
-    max-width: 600px;
+    max-width: 600px; /* see #img-hero */
     position: relative;
     width: 100%;
 }
@@ -427,7 +427,7 @@ h1.image-cell-info {
 
 #img-hero {
     max-height: 100%;
-    max-width: 100%;
+    max-width: 600px; /* see #hero-image-cell-image-container, set px value for IE */
 }
 
 .hero-image-cell-information-container {
