@@ -62,6 +62,8 @@
      * @property {string} [display]
      */
 
+    var _constButtonPageNext = "page-next";
+    var _constButtonPagePrevious = "page-prev";
     var _constButtonStyleDisplay = "block";
     /** The image collection filtered. @type {ImageItem[]} */
     var _filteredImages = _images;
@@ -540,8 +542,8 @@
         },
 
         /**
- * @returns {HTMLDivElement}
- */
+         * @returns {HTMLDivElement}
+         */
         getModal: function () {
             var body = document.body;
             var modal = findInChildren(body.children, { id: this._constImageCellModalId });
@@ -622,12 +624,12 @@
 
 
     function connectButtons() {
-        var e = document.getElementById("page-prev");
+        var e = document.getElementById(_constButtonPagePrevious);
         e.addEventListener("click", function () {
             thumbnails.pagePrevious();
         });
 
-        e = document.getElementById("page-next");
+        e = document.getElementById(_constButtonPageNext);
         e.addEventListener("click", function () {
             thumbnails.pageNext();
         });
@@ -793,8 +795,8 @@
 
         thumbnails.addCallback(function (type, data) {
             if (type === thumbnails._constEventImageRowAdded) {
-                var nextButton = document.getElementById("page-next");
-                var prevButton = document.getElementById("page-prev");
+                var nextButton = document.getElementById(_constButtonPageNext);
+                var prevButton = document.getElementById(_constButtonPagePrevious);
                 var isBegin = thumbnails.isImageCollectionBeginning();
                 var isEnd = thumbnails.isImageCollectionEnd();
                 if (!isEnd && !isBegin) {
