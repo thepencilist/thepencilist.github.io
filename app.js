@@ -83,7 +83,7 @@
         _constEventImageCollectionUpdated: "image-collection-updated",
         _constImageSeparationWidth: 0,
         _constMaxBlocksPerRow: 6,
-        _constMaxRowsPerPage: 1,
+        _constMaxRowsPerPage: 15,
         _constRowMaxWidth: 800,
         _currentPageRowCount: 0,
         /** @type {"next" | "previous"} */
@@ -437,9 +437,6 @@
             // updated event.
             var count = 0;
             for (var j = 0; j < images.length; j++) {
-                // if (images[j]) {
-                //     count++;
-                // }
                 count = images[j] ? count + 1 : count;
             }
 
