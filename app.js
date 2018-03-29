@@ -81,10 +81,9 @@
         // _constArTwoThree: 2 / 3, // 0.6667 P
         _constEventImageCellClicked: "image-cell-clicked",
         _constEventImageCollectionUpdated: "image-collection-updated",
-        _constEventImageRowAdded: "image-row-added",
         _constImageSeparationWidth: 0,
         _constMaxBlocksPerRow: 6,
-        _constMaxRowsPerPage: 15,
+        _constMaxRowsPerPage: 1,
         _constRowMaxWidth: 800,
         _currentPageRowCount: 0,
         /** @type {"next" | "previous"} */
@@ -148,7 +147,6 @@
             this._currentPageRowCount++;
             this._imagesDisplayedCount += row.length;
             this._nextPageStartIndex = this._direction === "next" ? this._nextPageStartIndex + row.length : this._nextPageStartIndex - row.length;
-            this.invokeCallbacks(this._constEventImageRowAdded);
             // console.log(`direction: ${this._direction}, _imagesDisplayedCount: ${this._imagesDisplayedCount}, _nextPageStartIndex: ${this._nextPageStartIndex}`);
         },
 
@@ -280,9 +278,6 @@
                     processIndex = thumbnails.processRow(loadedImages, processIndex);
                 });
             }
-
-            // Update button states.
-            this.invokeCallbacks(this._constEventImageCollectionUpdated);
         },
 
         /**
@@ -416,7 +411,8 @@
                 if (images.length <= i) {
                     if (0 < row.length) {
                         this.addImageRowToDom(row, nextIndex);
-                        return;
+                        nextIndex = null;
+                        break;
                     }
                 }
 
@@ -437,6 +433,20 @@
                 rowBlocks += images[i].image.imgData.numberOfBlocks;
             }
 
+            // If all of the images have been loaded raise the image collection
+            // updated event.
+            var count = 0;
+            for (var j = 0; j < images.length; j++) {
+                // if (images[j]) {
+                //     count++;
+                // }
+                count = images[j] ? count + 1 : count;
+            }
+
+            if (count === images.length) {
+                this.invokeCallbacks(this._constEventImageCollectionUpdated);
+            }
+            
             return nextIndex;
         },
 
