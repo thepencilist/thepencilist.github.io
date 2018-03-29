@@ -33,13 +33,20 @@ setTimeout(function () {
     }
 }, 200);
 
+function getScrollingElement() {
+    var d = document;
+    return d.documentElement.scrollHeight > d.body.scrollHeight &&
+        d.compatMode.indexOf("CSS1") === 0 ? d.documentElement : d.body;
+}
+
 
 var _HIDDEN_CLASS = "hidden";
 var isIncrementing = true;
 var changeScrollTop = 0;
 var lastScrollTop = 0;
 window.addEventListener("scroll", function (evt) {
-    var targetName = evt.target.scrollingElement.nodeName.toLowerCase();
+    var scroller = evt.target.scrollingElement ? evt.target.scrollingElement : getScrollingElement();
+    var targetName = scroller.nodeName.toLowerCase();
     if (targetName !== "body" && targetName !== "html") {
         return;
     }
