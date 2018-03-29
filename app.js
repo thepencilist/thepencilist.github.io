@@ -80,6 +80,7 @@
         _constArThreeTwo: 3 / 2, // 1.5 L
         // _constArTwoThree: 2 / 3, // 0.6667 P
         _constEventImageCellClicked: "image-cell-clicked",
+        _constEventImageCollectionUpdated: "image-collection-updated",
         _constEventImageRowAdded: "image-row-added",
         _constImageSeparationWidth: 0,
         _constMaxBlocksPerRow: 6,
@@ -279,6 +280,9 @@
                     processIndex = thumbnails.processRow(loadedImages, processIndex);
                 });
             }
+
+            // Update button states.
+            this.invokeCallbacks(this._constEventImageCollectionUpdated);
         },
 
         /**
@@ -794,7 +798,7 @@
         _filteredImages = _images;
 
         thumbnails.addCallback(function (type, data) {
-            if (type === thumbnails._constEventImageRowAdded) {
+            if (type === thumbnails._constEventImageCollectionUpdated) {
                 var nextButton = document.getElementById(_constButtonPageNext);
                 var prevButton = document.getElementById(_constButtonPagePrevious);
                 var isBegin = thumbnails.isImageCollectionBeginning();
