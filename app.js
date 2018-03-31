@@ -443,7 +443,7 @@
             if (count === images.length) {
                 this.invokeCallbacks(this._constEventImageCollectionUpdated);
             }
-            
+
             return nextIndex;
         },
 
@@ -633,6 +633,28 @@
 
     };
 
+
+    var filtering = {
+
+        createFilters: function () {
+            /** @type {string[]} */
+            var initial = [];
+            return _images
+                .reduce(function (accumulator, item) {
+                    item.tags.forEach(function (tag) {
+                        if (!accumulator.includes(tag)) {
+                            accumulator.push(tag);
+                        }
+                    });
+
+                    return accumulator;
+                }, initial)
+                .sort(function (a, b) {
+                    return a.localeCompare(b);
+                });
+        }
+
+    };
 
     function connectButtons() {
         var e = document.getElementById(_constButtonPagePrevious);
@@ -827,12 +849,23 @@
             }
         });
 
+        var filters = filtering.createFilters();
+
         var parent = document.getElementById("image-collection");
         thumbnails.buildImageCollection(parent);
     });
 
     /** The image collection. @type {ImageItem[]} */
     var _images = [
+        {
+            date: "February 20, 2018",
+            description: [
+                "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
+            ],
+            src: "drawings/brandy/brandy.jpg",
+            tags: ["commission", "drawing", "dog", "pets"],
+            title: "Brandy"
+        },
         {
             date: "February 9, 2018",
             description: [
@@ -843,7 +876,6 @@
             tags: ["cat", "color", "drawing", "pets"],
             title: "Bella"
         },
-
         {
             date: "February 2, 2018",
             description: [
@@ -854,7 +886,6 @@
             tags: ["commission", "dog", "drawing", "pets"],
             title: "Kitty"
         },
-
         {
             date: "January 27, 2018",
             description: [
@@ -882,7 +913,7 @@
                 "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
             ],
             src: "drawings/beach-seaweed/beach-seaweed.jpg",
-            tags: ["color", "drawing", "maine", "nature"],
+            tags: ["color", "drawing", "Maine", "nature"],
             title: "Geologist's Dream"
         },
         {
@@ -902,7 +933,7 @@
                 "14\"&nbsp;x&nbsp;17\" graphite and colored pencil on Bristol"
             ],
             src: "drawings/beach-red-leaf/beach-red-leaf.jpg",
-            tags: ["color", "drawing", "maine", "nature"],
+            tags: ["color", "drawing", "Maine", "nature"],
             title: "Red Leaf Beach"
         },
         {
