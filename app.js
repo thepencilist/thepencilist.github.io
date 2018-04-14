@@ -216,7 +216,7 @@
             var container = document.getElementById("cell-" + id);
             if (container === null) {
                 container = createElement("div", { className: "image-cell-container", id: "cell-" + id }, parent);
-                var imageCell = createElement("div", { className: "image-cell" }, container);
+                var imageCell = createElement("div", { className: "image-cell spinner-background" }, container);
 
                 // Don't create the img element here. That will be added later as needed.
 
