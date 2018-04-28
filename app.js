@@ -858,6 +858,33 @@
     /** The image collection. @type {ImageItem[]} */
     var _images = [
         {
+            date: "April 2018",
+            description: [
+                "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
+            ],
+            src: "drawings/three-dogs/samantha.jpg",
+            tags: ["commission", "drawing", "dog", "pets"],
+            title: "Samantha"
+        },
+        {
+            date: "March 2018",
+            description: [
+                "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
+            ],
+            src: "drawings/three-dogs/prince.jpg",
+            tags: ["commission", "drawing", "dog", "pets"],
+            title: "Prince"
+        },
+        {
+            date: "March 2018",
+            description: [
+                "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
+            ],
+            src: "drawings/three-dogs/jester.jpg",
+            tags: ["commission", "drawing", "dog", "pets"],
+            title: "Jester"
+        },
+        {
             date: "February 20, 2018",
             description: [
                 "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
