@@ -385,7 +385,7 @@ h1.image-cell-info {
     bottom: 0;
     left: 0;
     overflow: hidden;
-    padding: 20px 20px 40px 20px;
+    padding: 20px 20px 20px 20px;
     position: fixed;
     right: 0;
     text-align: center;
@@ -403,9 +403,9 @@ h1.image-cell-info {
 }
 
 #hero-image-cell-image-container {
-    display: inline-block;
+    box-sizing: border-box;
     height: 100%;
-    max-width: 600px; /* see #img-hero */
+    padding-right: 370px;
     position: relative;
     width: 100%;
 }
@@ -416,26 +416,25 @@ h1.image-cell-info {
 
 #hero-image-cell-image-position {
     align-items: center;
-    bottom: 0;
     display: flex;
+    height: 100%;
     justify-content: center;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
 }
 
 #img-hero {
     max-height: 100%;
-    max-width: 600px; /* see #hero-image-cell-image-container, set px value for IE */
+    /* max-width: 600px; see #hero-image-cell-image-container, set px value for IE */
+    max-width: 100%;
 }
 
 .hero-image-cell-information-container {
     display: inline-block;
     height: 100%;
-    position: relative;
+    position: absolute;
+    right: 0;
     text-align: left;
-    width: 40%;
+    top: 0;
+    width: 350px;
 }
 
 .hero-image-cell-information-container::after {
@@ -445,7 +444,7 @@ h1.image-cell-info {
 .hero-image-cell-information-position {
     bottom: 0;
     left: 0;
-    padding: 0 0 0 20px;
+    padding: 60px 20px 0 0;
     position: absolute;
     right: 0;
     top: 0;

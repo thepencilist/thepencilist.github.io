@@ -504,10 +504,14 @@
             var cell = findInChildren(modal.children, { id: this._constImageCellId });
             if (!cell) {
                 cell = createElement("div", { id: this._constImageCellId }, modal);
-                var imageContainer = createElement("div", { id: this._constImageCellImgContainerId }, cell);
-                createElement("div", { id: this._constImageCellImgPositionId }, imageContainer);
+
                 var closeContainer = createElement("div", { className: "close-container" }, cell);
                 createElement("div", { className: "close" }, closeContainer);
+
+                this.getInformation();
+
+                var imageContainer = createElement("div", { id: this._constImageCellImgContainerId }, cell);
+                createElement("div", { id: this._constImageCellImgPositionId }, imageContainer);
             } else {
                 cell = findInChildren(modal.children, { id: this._constImageCellId });
             }
