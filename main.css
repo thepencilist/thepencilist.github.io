@@ -462,28 +462,31 @@ h1.image-cell-info {
 
 .close {
     background-color: rgb(53, 50, 48);
-    height: 25%;
-    margin-top: 50%;
-    position: absolute;
-    transform: translateY(-50%);
-    width: 100%;
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 25%;
 }
 
 .close::after {
     background-color: rgb(53, 50, 48);
     content: "";
-    height: 400%;
-    margin: 12.5% 0 0 12.5%;
+    height: 25%;
+    margin-top: 50%;
+    left: 0;
     position: absolute;
-    transform: translateX(100%) translateY(-50%);
-    width: 25%;
+    top: 0;
+    transform: translateY(-50%);
+    width: 100%;
 }
 
 .close-container {
     height: 25px;
     overflow: hidden;
     position: absolute;
-    right: 0;
+    right: 25px;
+    text-align: center;
+    top: 25px;
     transform: rotate(45deg);
     width: 25px;
 }

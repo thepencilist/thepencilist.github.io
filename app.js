@@ -506,6 +506,8 @@
                 cell = createElement("div", { id: this._constImageCellId }, modal);
                 var imageContainer = createElement("div", { id: this._constImageCellImgContainerId }, cell);
                 createElement("div", { id: this._constImageCellImgPositionId }, imageContainer);
+                var closeContainer = createElement("div", { className: "close-container" }, cell);
+                createElement("div", { className: "close" }, closeContainer);
             } else {
                 cell = findInChildren(modal.children, { id: this._constImageCellId });
             }
@@ -531,12 +533,6 @@
                 infoPosition = children[0];
             } else {
                 infoPosition = createElement("div", { className: this._constImageCellInformationPositionClass }, infoContainer);
-            }
-
-            children = findInChildren(infoContainer.children, { className: "close-container" });
-            if (!children) {
-                var closeContainer = createElement("div", { className: "close-container" }, infoContainer);
-                createElement("div", { className: "close" }, closeContainer);
             }
 
 
