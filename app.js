@@ -642,7 +642,15 @@
             return _images
                 .reduce(function (accumulator, item) {
                     item.tags.forEach(function (tag) {
-                        if (!accumulator.includes(tag)) {
+                        var includes = false;
+                        for (var i = 0; i < accumulator.length; i++) {
+                            if (accumulator[i] === tag) {
+                                includes = true;
+                                break;
+                            }
+                        }
+
+                        if (!includes) {
                             accumulator.push(tag);
                         }
                     });
