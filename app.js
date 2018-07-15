@@ -866,6 +866,24 @@
     /** The image collection. @type {ImageItem[]} */
     var _images = [
         {
+            date: "July 2018",
+            description: [
+                "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
+            ],
+            src: "drawings/two-dogs/RLM27577.jpg",
+            tags: ["commission", "drawing", "dog", "pets"],
+            title: "Resting"
+        },
+        {
+            date: "July 2018",
+            description: [
+                "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
+            ],
+            src: "drawings/two-dogs/RLM27571.jpg",
+            tags: ["commission", "drawing", "dog", "pets"],
+            title: "Boating"
+        },
+        {
             date: "April 2018",
             description: [
                 "14\"&nbsp;x&nbsp;17\" graphite on Bristol"
