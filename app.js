@@ -872,7 +872,7 @@
             ],
             src: "drawings/two-dogs/RLM27577.jpg",
             tags: ["commission", "drawing", "dog", "pets"],
-            title: "Resting"
+            title: "Zoey"
         },
         {
             date: "July 2018",
@@ -881,7 +881,7 @@
             ],
             src: "drawings/two-dogs/RLM27571.jpg",
             tags: ["commission", "drawing", "dog", "pets"],
-            title: "Boating"
+            title: "Keuka summers"
         },
         {
             date: "April 2018",
