@@ -302,6 +302,7 @@ span.icon {
 }
 
 .image-cell {
+    background-color: lightgray;
     width: 100%;
 }
 
