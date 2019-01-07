@@ -270,7 +270,7 @@
                 return;
             }
 
-            img = createElement("img", null, null, { height: image.imgData.height + "px", width: image.imgData.width + "px" });
+            img = createElement("img", { alt: image.title }, null, { height: image.imgData.height + "px", width: image.imgData.width + "px" });
             img.dataset.id = image.imgData.id;
 
             requestId = requestAnimationFrame(function() {
