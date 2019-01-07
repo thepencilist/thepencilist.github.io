@@ -291,6 +291,7 @@ span.icon {
 }
 
 .image-collection-wrapper {
+    margin-top: 1px;
     width: 100%;
 }
 
@@ -301,13 +302,23 @@ span.icon {
     width: 800px;
 }
 
-.image-cell {
-    background-color: lightgray;
-    width: 100%;
+.image-cell::before {
+    border: solid rgb(53, 50, 48) 2px;
+    bottom: 0;
+    content: "";
+    left: 1px;
+    position: absolute;
+    right: 1px;
+    top: 0;
 }
 
 .image-cell:hover {
     cursor: pointer;
+}
+
+/* Only doing this so that the img element is above the border created by image-cell::before. */
+.image-cell > img {
+    position: absolute;
 }
 
 .image-cell-info-overlay {
